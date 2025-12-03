@@ -154,9 +154,6 @@
 
         window.onload = renderCart;
         
-        // **********************************************
-        // الدالة الأهم: checkout (الحفظ السحابي باستخدام Firebase)
-        // **********************************************
         async function checkout() {
             if (cart.length === 0) {
                 alert('الرجاء إضافة منتجات للسلة أولاً.');
@@ -192,8 +189,8 @@
             };
 
             try {
-                // استخدام Firebase: حفظ الطلب في مجموعة "orders"
-                await firebase.addDoc(window.ordersCollection, newOrder); 
+                // حفظ الطلب في Firebase
+                await addDoc(window.ordersCollection, newOrder); 
 
                 alert(`شكراً لك يا ${buyerName}! تم تسجيل طلبك بنجاح على السحابة، وسيظهر للمسؤول على الفور.`);
                 localStorage.removeItem('oliveyCart');
