@@ -86,9 +86,11 @@
             margin: 30px auto;
             padding: 0 5%;
             display: grid;
+            /* عرض المنتجات في صف واحد إذا كان المنتج قليل */
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            flex-grow: 1; /* لتمديد المحتوى */
+            flex-grow: 1; 
+            justify-content: center; /* توسيط العناصر عند عرضها في صف واحد */
         }
 
         .product-card {
@@ -179,7 +181,7 @@
 
     <main class="products-container" id="products-list">
         <h2>جاري تحميل المنتجات...</h2>
-        </main>
+    </main>
 
     <footer>
         <p>جميع الحقوق محفوظة &copy; 2023 Olivey</p>
@@ -191,12 +193,10 @@
             alert(text);
         }
 
-        // المنتجات المتوفرة (يمكنك تعديل هذه القائمة)
+        // المنتجات المتوفرة (تم تعديلها حسب طلبك)
         const products = [
             { id: 1, name: 'زيت زيتون بكر ممتاز - 1 لتر', price: 250, image: 'https://via.placeholder.com/300x200?text=Oil+1L' },
-            { id: 2, name: 'زيتون كلاماتا مخلل - 500 جرام', price: 120, image: 'https://via.placeholder.com/300x200?text=Olives+500G' },
-            { id: 3, name: 'زيت زيتون عضوي عصرة أولى - 5 لتر', price: 800, image: 'https://via.placeholder.com/300x200?text=Oil+5L' },
-            { id: 4, name: 'صابون زيت الزيتون الطبيعي', price: 40, image: 'https://via.placeholder.com/300x200?text=Soap' },
+            { id: 2, name: 'زيت زيتون بكر ممتاز - 5 لتر', price: 1100, image: 'https://via.placeholder.com/300x200?text=Oil+5L' },
         ];
 
         // قراءة السلة من Local Storage أو إنشاء سلة فارغة
