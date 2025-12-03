@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المسؤول | Olivey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary-color: #3d5a28; --secondary-color: #8ea604; --accent-color: #f4a261; --light-bg: #f9fdf5; --text-color: #333; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--light-bg); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; }
+        header { background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
+        .dashboard-container { max-width: 1200px; margin: 30px auto; padding: 20px; flex-grow: 1; }
+        .dashboard-container h2 { color: var(--primary-color); margin-bottom: 25px; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px; }
+        .order-card { background: white; border-right: 5px solid var(--primary-color); margin-bottom: 15px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .order-card h4 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.2rem; }
+        .order-items { list-style: none; padding-right: 20px; margin-top: 10px; border-right: 1px dashed #ccc; padding-right: 10px; }
+        .status-badge { display: inline-block; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.85rem; margin-top: 10px; }
+        .status-new { background-color: #ffc107; color: #333; }
+        .status-processed { background-color: #28a745; color: white; }
+        .action-btn { padding: 8px 15px; background-color: var(--secondary-color); color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; margin-top: 10px; float: left; margin-left: 10px; }
+        .action-btn:hover { background-color: var(--primary-color); }
+        .logout-btn { background-color: #dc3545; }
+        .logout-btn:hover { background-color: #c82333; }
+        footer { background-color: var(--primary-color); color: white; text-align: center; padding: 1.5rem; margin-top: auto; }
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 10px; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">لوحة تحكم Olivey</div>
+            <button class="action-btn logout-btn" onclick="logout()">تسجيل الخروج</button>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <h2>📊 قائمة الطلبات الجديدة</h2>
+        
+        <div id="orders-list">
+            </div>
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2023 Olivey</p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM",
+            authDomain: "zaytonaty-f4240.firebaseapp.com",
+            projectId: "zaytonaty-f4240",
+            storageBucket: "zaytonaty-f4240.firebasestorage.app",
+            messagingSenderId: "268778198002",
+            appId: "1:268778198002:web:2803824e75be502f73916b",
+            measurementId: "G-Y47CN3QHJ1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.ordersCollection = collection(db, "orders");
+    </script>
+    
+    <script>
+        // 1. التحقق من حالة الدخول (التأكد أن المسؤول سجل الدخول)
+        if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
+            alert("غير مصرح لك بالدخول. يرجى تسجيل الدخول أولاً.");
+            // يرجى التأكد أن لديك ملف login.html وأن كلمة السر هي 'admin123'
+            window.location.href = 'login.html'; 
+        }
+
+        function logout() {
+            localStorage.removeItem('isAdminLoggedIn');
+            alert("تم تسجيل الخروج بنجاح.");
+            window.location.href = 'index.html';
+        }
+        
+        // **********************************************
+        // دوال Firebase: تحديث وحذف الطلب
+        // **********************************************
+
+        async function updateOrderStatus(docId, newStatus) {
+            if (!window.db) return alert("خطأ في اتصال Firebase.");
+            const orderRef = doc(window.db, "orders", docId);
+            try {
+                await updateDoc(orderRef, { status: newStatus });
+                renderOrders();
+            } catch (e) {
+                console.error("Error updating document: ", e);
+                alert("فشل تحديث حالة الطلب.");
+            }
+        }
+        
+        async function deleteOrder(docId) {
+             if (!window.db) return alert("خطأ في اتصال Firebase.");
+             if (confirm("هل أنت متأكد من حذف هذا الطلب نهائياً؟")) {
+                try {
+                    await deleteDoc(doc(window.db, "orders", docId));
+                    renderOrders();
+                } catch (e) {
+                    console.error("Error deleting document: ", e);
+                    alert("فشل حذف الطلب.");
+                }
+             }
+        }
+
+        // **********************************************
+        // الدالة الأهم: renderOrders (القراءة السحابية)
+        // **********************************************
+
+        async function renderOrders() {
+            const listContainer = document.getElementById('orders-list');
+            listContainer.innerHTML = '<h2>جاري تحميل الطلبات من السحابة...</h2>';
+            
+            if (!window.ordersCollection) {
+                listContainer.innerHTML = '<h2>الرجاء الانتظار حتى يتم تحميل إعدادات Firebase</h2>';
+                setTimeout(renderOrders, 1000); 
+                return;
+            }
+
+            let orders = [];
+
+            try {
+                const snapshot = await getDocs(window.ordersCollection);
+                snapshot.forEach(doc => {
+                    orders.push({ firebaseId: doc.id, ...doc.data() }); 
+                });
+            } catch (e) {
+                console.error("Error getting documents: ", e);
+                listContainer.innerHTML = '<h2>لم يتمكن من الاتصال بقاعدة البيانات. تأكد من إعدادات Firebase وقواعد الأمان.</h2>';
+                return;
+            }
+
+            if (orders.length === 0) {
+                listContainer.innerHTML = '<p style="text-align: center; color: #888;">لا توجد طلبات جديدة حالياً.</p>';
+                return;
+            }
+
+            listContainer.innerHTML = '';
+            orders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card';
+                
+                const buyer = order.buyer || {};
+                const statusClass = order.status === 'جديد' ? 'status-new' : 'status-processed';
+
+                const itemsList = (order.items || []).map(item => 
+                    `<li>${item.name} (${item.quantity} قطعة)</li>`
+                ).join('');
+
+
+                orderCard.innerHTML = `
+                    <h4 style="float: right;">تاريخ الطلب: ${order.date.split(',')[0]}</h4>
+                    <span class="status-badge ${statusClass}" style="float: left;">الحالة: ${order.status}</span>
+                    <div style="clear: both;"></div>
+                    
+                    <p><strong>اسم المشتري:</strong> ${buyer.name || 'غير متوفر'}</p>
+                    <p><strong>رقم الهاتف:</strong> ${buyer.phone || 'غير متوفر'}</p>
+                    <p><strong>العنوان:</strong> ${buyer.address || 'غير متوفر'}</p>
+                    <hr style="border-top: 1px solid #eee; margin: 10px 0;">
+
+                    <p><strong>الإجمالي:</strong> ${order.total} ج.م</p>
+                    <p><strong>التاريخ والوقت:</strong> ${order.date}</p>
+                    
+                    <p><strong>المنتجات المطلوبة:</strong></p>
+                    <ul class="order-items">${itemsList}</ul>
+
+                    ${order.status === 'جديد' ? 
+                        `<button class="action-btn" onclick="updateOrderStatus('${order.firebaseId}', 'تم التجهيز')">تجهيز الطلب</button>` :
+                        `<button class="action-btn" style="background-color: #6c757d;" disabled>تم التجهيز</button>`
+                    }
+                    <button class="action-btn logout-btn" onclick="deleteOrder('${order.firebaseId}')" style="background-color: #dc3545;">حذف الطلب</button>
+                    
+                `;
+                listContainer.appendChild(orderCard);
+            });
+        }
+
+        window.onload = renderOrders;
+    </script>
+</body>
+</html>
