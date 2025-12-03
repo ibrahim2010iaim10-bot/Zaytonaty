@@ -3,179 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم المسؤول | Olivey</title>
+    <title>Olivey - لمنتجات الزيتون الأصيلة</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary-color: #3d5a28; --secondary-color: #8ea604; --accent-color: #f4a261; --light-bg: #f9fdf5; --text-color: #333; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         body { background-color: var(--light-bg); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
         a { text-decoration: none; color: inherit; }
-        header { background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        header { background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; max-width: 1200px; margin: 0 auto; }
         .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
-        .dashboard-container { max-width: 1200px; margin: 30px auto; padding: 20px; flex-grow: 1; }
-        .dashboard-container h2 { color: var(--primary-color); margin-bottom: 25px; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px; }
-        .order-card { background: white; border-right: 5px solid var(--primary-color); margin-bottom: 15px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .order-card h4 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.2rem; }
-        .order-items { list-style: none; padding-right: 20px; margin-top: 10px; border-right: 1px dashed #ccc; padding-right: 10px; }
-        .status-badge { display: inline-block; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-size: 0.85rem; margin-top: 10px; }
-        .status-new { background-color: #ffc107; color: #333; }
-        .status-processed { background-color: #28a745; color: white; }
-        .action-btn { padding: 8px 15px; background-color: var(--secondary-color); color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; margin-top: 10px; float: left; margin-left: 10px; }
-        .action-btn:hover { background-color: var(--primary-color); }
-        .logout-btn { background-color: #dc3545; }
-        .logout-btn:hover { background-color: #c82333; }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { font-weight: 500; transition: color 0.3s; padding: 5px 10px; border-radius: 5px; }
+        .nav-links a:hover { color: white; background-color: var(--secondary-color); }
+        .contact-info { font-size: 0.9rem; color: var(--primary-color); font-weight: bold; }
+
+        /* Hero Section Styling */
+        .hero { background: url('https://placehold.co/1200x500/3d5a28/ffffff?text=Olivey+Farms') no-repeat center center/cover; color: white; padding: 80px 5%; text-align: center; margin-bottom: 40px; }
+        .hero-content { max-width: 800px; margin: 0 auto; background-color: rgba(0, 0, 0, 0.4); padding: 30px; border-radius: 10px; }
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; font-weight: bold; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; }
+        .shop-btn { background-color: var(--accent-color); color: var(--primary-color); padding: 12px 30px; border-radius: 50px; font-size: 1.1rem; font-weight: bold; transition: background-color 0.3s; }
+        .shop-btn:hover { background-color: #e69557; }
+
+        /* Features Section */
+        .features-section { display: flex; justify-content: space-around; gap: 20px; max-width: 1200px; margin: 0 auto 40px; padding: 0 5%; flex-wrap: wrap; }
+        .feature-item { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; flex: 1; min-width: 250px; transition: transform 0.3s; }
+        .feature-item:hover { transform: translateY(-5px); }
+        .feature-item h3 { color: var(--secondary-color); margin-bottom: 10px; }
+        .feature-item p { color: #666; font-size: 0.95rem; }
+
+        /* About & Call to Action Section */
+        .content-section { max-width: 1200px; margin: 0 auto 40px; padding: 20px 5%; display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }
+        .content-text { flex: 1; min-width: 300px; }
+        .content-image { flex: 1; min-width: 300px; text-align: center; }
+        .content-image img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .content-text h2 { color: var(--primary-color); margin-bottom: 15px; font-size: 2rem; border-right: 3px solid var(--accent-color); padding-right: 10px; }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 10px; }
+            .content-section { flex-direction: column; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .features-section { justify-content: center; }
+        }
+
+        /* Footer */
         footer { background-color: var(--primary-color); color: white; text-align: center; padding: 1.5rem; margin-top: auto; }
-        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 10px; } }
     </style>
 </head>
 <body>
 
     <header>
         <nav class="navbar">
-            <div class="logo">لوحة تحكم Olivey</div>
-            <button class="action-btn logout-btn" onclick="logout()">تسجيل الخروج</button>
+            <div class="logo">Olivey 🌿</div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="products.html">المنتجات</a></li>
+                <li><a href="cart.html">سلة الشراء</a></li>
+                <li><a href="login.html">دخول المسؤول</a></li>
+            </ul>
+            <div class="contact-info">
+                اتصل بنا: 201018563500+ 📞
+            </div>
         </nav>
     </header>
 
-    <main class="dashboard-container">
-        <h2>📊 قائمة الطلبات الجديدة</h2>
-        
-        <div id="orders-list">
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>جودة زيتون لا تُنسى</h1>
+                <p>مرحباً بك في Olivey، حيث نجمع لك أجود محاصيل الزيتون وزيوتها الطبيعية. اكتشف طعم الأصالة والجودة.</p>
+                <a href="products.html" class="shop-btn">اكتشف منتجاتنا</a>
             </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="feature-item">
+                <h3>حصاد طازج</h3>
+                <p>نحرص على قطف الزيتون يدوياً في موسمه لضمان أعلى مستويات الجودة والمذاق.</p>
+            </div>
+            <div class="feature-item">
+                <h3>زيت بكر ممتاز</h3>
+                <p>زيوتنا معصورة على البارد، خالية من الإضافات، لتحصل على أقصى فائدة صحية.</p>
+            </div>
+            <div class="feature-item">
+                <h3>توصيل سريع</h3>
+                <p>نوصل طلباتك بأسرع وقت ممكن وبأفضل طرق التغليف للحفاظ على المنتج.</p>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section class="content-section">
+            <div class="content-text">
+                <h2>قصتنا مع الزيتون</h2>
+                <p>بدأت Olivey كحلم بتحويل شغفنا بالزيتون إلى علامة تجارية تقدم منتجات طبيعية 100% لعملائنا. نحن نؤمن بأن الغذاء الصحي يبدأ من الأرض الطيبة، ولذا نراقب كل خطوة من الزراعة حتى التعبئة. نضمن أن كل قطرة زيت وكل حبة زيتون تصل إليك هي نتاج عمل مخلص ومعايير جودة صارمة.</p>
+            </div>
+            <div class="content-image">
+                <img src="https://placehold.co/400x300/8ea604/ffffff?text=Olive+Harvest" alt="صورة لحصاد الزيتون">
+            </div>
+        </section>
+        
+        <!-- Quality Guarantee Section -->
+         <section class="content-section" style="flex-direction: row-reverse;">
+            <div class="content-text">
+                <h2>ضمان الجودة</h2>
+                <p>نحن فخورون بتقديم شهادة الجودة لجميع منتجاتنا. يتم اختبار زيوت الزيتون لدينا بانتظام لضمان الحموضة المنخفضة والمطابقة لمعايير الزيت البكر الممتاز. رضاك هو أولويتنا القصوى.</p>
+            </div>
+            <div class="content-image">
+                <img src="https://placehold.co/400x300/3d5a28/ffffff?text=Quality+Assurance" alt="ضمان الجودة">
+            </div>
+        </section>
+
     </main>
 
     <footer>
         <p>جميع الحقوق محفوظة &copy; 2023 Olivey</p>
     </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM",
-            authDomain: "zaytonaty-f4240.firebaseapp.com",
-            projectId: "zaytonaty-f4240",
-            storageBucket: "zaytonaty-f4240.firebasestorage.app",
-            messagingSenderId: "268778198002",
-            appId: "1:268778198002:web:2803824e75be502f73916b",
-            measurementId: "G-Y47CN3QHJ1"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        window.db = db;
-        window.ordersCollection = collection(db, "orders");
-    </script>
-    
-    <script>
-        if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
-            alert("غير مصرح لك بالدخول. يرجى تسجيل الدخول أولاً.");
-            window.location.href = 'login.html'; 
-        }
-
-        function logout() {
-            localStorage.removeItem('isAdminLoggedIn');
-            alert("تم تسجيل الخروج بنجاح.");
-            window.location.href = 'index.html';
-        }
-        
-        async function updateOrderStatus(docId, newStatus) {
-            if (!window.db) return alert("خطأ في اتصال Firebase.");
-            const orderRef = doc(window.db, "orders", docId);
-            try {
-                await updateDoc(orderRef, { status: newStatus });
-                renderOrders(); 
-            } catch (e) {
-                console.error("Error updating document: ", e);
-                alert("فشل تحديث حالة الطلب.");
-            }
-        }
-        
-        async function deleteOrder(docId) {
-             if (!window.db) return alert("خطأ في اتصال Firebase.");
-             if (confirm("هل أنت متأكد من حذف هذا الطلب نهائياً؟")) {
-                try {
-                    await deleteDoc(doc(window.db, "orders", docId));
-                    renderOrders(); 
-                } catch (e) {
-                    console.error("Error deleting document: ", e);
-                    alert("فشل حذف الطلب.");
-                }
-             }
-        }
-
-        async function renderOrders() {
-            const listContainer = document.getElementById('orders-list');
-            listContainer.innerHTML = '<h2>جاري تحميل الطلبات من السحابة...</h2>';
-            
-            if (!window.ordersCollection) {
-                listContainer.innerHTML = '<h2>الرجاء الانتظار حتى يتم تحميل إعدادات Firebase</h2>';
-                setTimeout(renderOrders, 1000); 
-                return;
-            }
-
-            let orders = [];
-
-            try {
-                const snapshot = await getDocs(window.ordersCollection);
-                snapshot.forEach(doc => {
-                    orders.push({ firebaseId: doc.id, ...doc.data() }); 
-                });
-            } catch (e) {
-                console.error("Error getting documents: ", e);
-                listContainer.innerHTML = '<h2>لم يتمكن من الاتصال بقاعدة البيانات. تأكد من إعدادات Firebase وقواعد الأمان.</h2>';
-                return;
-            }
-
-            if (orders.length === 0) {
-                listContainer.innerHTML = '<p style="text-align: center; color: #888;">لا توجد طلبات جديدة حالياً.</p>';
-                return;
-            }
-
-            listContainer.innerHTML = '';
-            orders.forEach(order => {
-                const orderCard = document.createElement('div');
-                orderCard.className = 'order-card';
-                
-                const buyer = order.buyer || {};
-                const statusClass = order.status === 'جديد' ? 'status-new' : 'status-processed';
-
-                const itemsList = (order.items || []).map(item => 
-                    `<li>${item.name} (${item.quantity} قطعة)</li>`
-                ).join('');
-
-
-                orderCard.innerHTML = `
-                    <h4 style="float: right;">تاريخ الطلب: ${order.date.split(',')[0]}</h4>
-                    <span class="status-badge ${statusClass}" style="float: left;">الحالة: ${order.status}</span>
-                    <div style="clear: both;"></div>
-                    
-                    <p><strong>اسم المشتري:</strong> ${buyer.name || 'غير متوفر'}</p>
-                    <p><strong>رقم الهاتف:</strong> ${buyer.phone || 'غير متوفر'}</p>
-                    <p><strong>العنوان:</strong> ${buyer.address || 'غير متوفر'}</p>
-                    <hr style="border-top: 1px solid #eee; margin: 10px 0;">
-
-                    <p><strong>الإجمالي:</strong> ${order.total} ج.م</p>
-                    <p><strong>التاريخ والوقت:</strong> ${order.date}</p>
-                    
-                    <p><strong>المنتجات المطلوبة:</strong></p>
-                    <ul class="order-items">${itemsList}</ul>
-
-                    ${order.status === 'جديد' ? 
-                        `<button class="action-btn" onclick="updateOrderStatus('${order.firebaseId}', 'تم التجهيز')">تجهيز الطلب</button>` :
-                        `<button class="action-btn" style="background-color: #6c757d;" disabled>تم التجهيز</button>`
-                    }
-                    <button class="action-btn logout-btn" onclick="deleteOrder('${order.firebaseId}')" style="background-color: #dc3545;">حذف الطلب</button>
-                    
-                `;
-                listContainer.appendChild(orderCard);
-            });
-        }
-
-        window.onload = renderOrders;
-    </script>
 </body>
 </html>
