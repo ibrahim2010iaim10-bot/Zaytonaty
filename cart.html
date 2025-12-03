@@ -6,197 +6,33 @@
     <title>سلة الشراء | Olivey</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #3d5a28;
-            --secondary-color: #8ea604;
-            --accent-color: #f4a261;
-            --light-bg: #f9fdf5;
-            --text-color: #333;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        body {
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* تصميم الهيدر */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary-color);
-        }
-
-        .contact-info {
-            font-size: 0.9rem;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        /* تنسيق محتوى السلة */
-        .cart-container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            flex-grow: 1;
-        }
-        
-        .cart-container h2 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 25px;
-        }
-
-        .cart-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        .cart-table th, .cart-table td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: right;
-        }
-
-        .cart-table th {
-            background-color: var(--light-bg);
-            color: var(--primary-color);
-            text-align: center;
-        }
-        
-        .cart-table td {
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .quantity-controls button {
-            background: none;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-        
-        .quantity-controls button:hover {
-            background-color: #eee;
-        }
-
-        .remove-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .remove-btn:hover {
-            background-color: #c82333;
-        }
-
-        .cart-summary {
-            text-align: left;
-            padding: 15px;
-            border-top: 2px solid var(--secondary-color);
-        }
-
-        .cart-summary h3 {
-            margin-bottom: 15px;
-            color: var(--text-color);
-        }
-
-        .checkout-btn {
-            float: left;
-            padding: 15px 30px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .checkout-btn:hover {
-            background-color: var(--primary-color);
-        }
-
-        .empty-cart-message {
-            text-align: center;
-            padding: 50px;
-            color: #888;
-        }
-
-        /* تذييل الصفحة (Footer) */
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: auto;
-        }
-
-        @media (max-width: 600px) {
-            .cart-container {
-                padding: 10px;
-            }
-            .cart-table th, .cart-table td {
-                padding: 8px;
-                font-size: 0.9rem;
-            }
-        }
+        :root { --primary-color: #3d5a28; --secondary-color: #8ea604; --accent-color: #f4a261; --light-bg: #f9fdf5; --text-color: #333; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--light-bg); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; }
+        header { background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--secondary-color); }
+        .contact-info { font-size: 0.9rem; color: var(--primary-color); font-weight: bold; }
+        .cart-container { max-width: 900px; margin: 30px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); flex-grow: 1; }
+        .cart-container h2 { text-align: center; color: var(--primary-color); margin-bottom: 25px; }
+        .cart-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .cart-table th, .cart-table td { padding: 12px; border-bottom: 1px solid #ddd; text-align: center; vertical-align: middle; }
+        .cart-table th { background-color: var(--light-bg); color: var(--primary-color); }
+        .quantity-controls button { background: none; border: 1px solid #ccc; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+        .remove-btn { background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+        .cart-summary { text-align: left; padding: 15px; border-top: 2px solid var(--secondary-color); }
+        .checkout-btn { float: left; padding: 15px 30px; background-color: var(--secondary-color); color: white; border: none; border-radius: 5px; font-size: 1.1rem; cursor: pointer; transition: background 0.3s; }
+        .checkout-btn:hover { background-color: var(--primary-color); }
+        .empty-cart-message { text-align: center; padding: 50px; color: #888; }
+        footer { background-color: var(--primary-color); color: white; text-align: center; padding: 1.5rem; margin-top: auto; }
+        .buyer-info { padding: 20px; background-color: #f0fff0; border: 1px solid var(--secondary-color); border-radius: 8px; margin-top: 25px; margin-bottom: 25px; }
+        .buyer-info h3 { color: var(--primary-color); margin-bottom: 15px; text-align: right; }
+        .buyer-info input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 10px; } }
     </style>
 </head>
 <body>
@@ -222,6 +58,13 @@
         <div id="cart-content">
             </div>
 
+        <div id="buyer-form" class="buyer-info" style="display: none;">
+            <h3>بيانات المشتري والتوصيل</h3>
+            <input type="text" id="buyer-name" placeholder="الاسم الكامل" required>
+            <input type="tel" id="buyer-phone" placeholder="رقم الهاتف (مثال: 010xxxxxxxx)" required>
+            <input type="text" id="buyer-address" placeholder="عنوان التوصيل التفصيلي" required>
+        </div>
+
         <div id="cart-summary" class="cart-summary" style="display: none;">
             <h3>الإجمالي: <span id="cart-total">0</span> جنيه مصري</h3>
             <button class="checkout-btn" onclick="checkout()">إنهاء الطلب</button>
@@ -233,106 +76,135 @@
         <p>جميع الحقوق محفوظة &copy; 2023 Olivey</p>
     </footer>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+
+        // مفاتيحك الخاصة
+        const firebaseConfig = {
+            apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM",
+            authDomain: "zaytonaty-f4240.firebaseapp.com",
+            projectId: "zaytonaty-f4240",
+            storageBucket: "zaytonaty-f4240.firebasestorage.app",
+            messagingSenderId: "268778198002",
+            appId: "1:268778198002:web:2803824e75be502f73916b",
+            measurementId: "G-Y47CN3QHJ1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.ordersCollection = collection(db, "orders");
+    </script>
+    
     <script>
-        // قراءة السلة
         let cart = JSON.parse(localStorage.getItem('oliveyCart')) || [];
         const cartContent = document.getElementById('cart-content');
         const cartSummary = document.getElementById('cart-summary');
         const cartTotalSpan = document.getElementById('cart-total');
+        const buyerForm = document.getElementById('buyer-form');
 
-        // دالة تحديث السلة في LocalStorage
         function saveCart() {
             localStorage.setItem('oliveyCart', JSON.stringify(cart));
-            renderCart(); // إعادة عرض السلة بعد كل تغيير
+            renderCart();
         }
 
-        // دالة لحذف منتج
         function removeItem(id) {
             cart = cart.filter(item => item.id !== id);
             saveCart();
         }
 
-        // دالة لتغيير الكمية
         function changeQuantity(id, delta) {
             const item = cart.find(i => i.id === id);
             if (item) {
                 item.quantity += delta;
                 if (item.quantity <= 0) {
-                    removeItem(id); // حذف المنتج إذا كانت الكمية صفر
+                    removeItem(id);
                 } else {
                     saveCart();
                 }
             }
         }
 
-        // دالة لعرض محتويات السلة
         function renderCart() {
             if (cart.length === 0) {
                 cartContent.innerHTML = '<div class="empty-cart-message">سلة الشراء فارغة! <a href="products.html">انتقل للمنتجات.</a></div>';
                 cartSummary.style.display = 'none';
+                buyerForm.style.display = 'none';
                 return;
             }
             
             let total = 0;
-            let tableHTML = `
-                <table class="cart-table">
-                    <thead>
-                        <tr>
-                            <th>المنتج</th>
-                            <th>السعر</th>
-                            <th>الكمية</th>
-                            <th>الإجمالي</th>
-                            <th>إزالة</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            let tableHTML = `<table class="cart-table"><thead><tr><th>المنتج</th><th>السعر</th><th>الكمية</th><th>الإجمالي</th><th>إزالة</th></tr></thead><tbody>`;
 
             cart.forEach(item => {
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal;
-
-                tableHTML += `
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>${item.price} ج.م</td>
-                        <td>
-                            <div class="quantity-controls">
-                                <button onclick="changeQuantity(${item.id}, 1)">+</button>
-                                <span>${item.quantity}</span>
-                                <button onclick="changeQuantity(${item.id}, -1)">-</button>
-                            </div>
-                        </td>
-                        <td>${itemTotal} ج.م</td>
-                        <td><button class="remove-btn" onclick="removeItem(${item.id})">حذف</button></td>
-                    </tr>
-                `;
+                tableHTML += `<tr><td>${item.name}</td><td>${item.price} ج.م</td><td><div class="quantity-controls"><button onclick="changeQuantity(${item.id}, 1)">+</button><span>${item.quantity}</span><button onclick="changeQuantity(${item.id}, -1)">-</button></div></td><td>${itemTotal} ج.م</td><td><button class="remove-btn" onclick="removeItem(${item.id})">حذف</button></td></tr>`;
             });
 
-            tableHTML += `
-                    </tbody>
-                </table>
-            `;
+            tableHTML += `</tbody></table>`;
             
             cartContent.innerHTML = tableHTML;
             cartTotalSpan.textContent = total;
             cartSummary.style.display = 'block';
+            buyerForm.style.display = 'block';
         }
 
-        // دالة إنهاء الطلب الوهمية
-        function checkout() {
-            if (cart.length > 0) {
-                alert(`شكراً لك! سيتم توصيل طلبك بقيمة ${cartTotalSpan.textContent} ج.م قريباً.`);
-                localStorage.removeItem('oliveyCart'); // إفراغ السلة
+        window.onload = renderCart;
+        
+        // **********************************************
+        // الدالة الأهم: checkout (الحفظ السحابي باستخدام Firebase)
+        // **********************************************
+        async function checkout() {
+            if (cart.length === 0) {
+                alert('الرجاء إضافة منتجات للسلة أولاً.');
+                return;
+            }
+            
+            const buyerName = document.getElementById('buyer-name').value;
+            const buyerPhone = document.getElementById('buyer-phone').value;
+            const buyerAddress = document.getElementById('buyer-address').value;
+
+            if (!buyerName || !buyerPhone || !buyerAddress) {
+                alert('الرجاء تعبئة جميع خانات بيانات المشتري (الاسم، الهاتف، العنوان).');
+                return;
+            }
+            
+            if (!window.ordersCollection) {
+                 alert("خطأ: لم يتم تحميل إعدادات Firebase بعد. يرجى تحديث الصفحة.");
+                 return;
+            }
+
+            const totalAmount = parseFloat(cartTotalSpan.textContent);
+            
+            const newOrder = {
+                items: cart,
+                total: totalAmount,
+                date: new Date().toLocaleString('ar-EG'),
+                status: 'جديد',
+                buyer: {
+                    name: buyerName,
+                    phone: buyerPhone,
+                    address: buyerAddress
+                }
+            };
+
+            try {
+                // استخدام Firebase: حفظ الطلب في مجموعة "orders"
+                await firebase.addDoc(window.ordersCollection, newOrder); 
+
+                alert(`شكراً لك يا ${buyerName}! تم تسجيل طلبك بنجاح على السحابة، وسيظهر للمسؤول على الفور.`);
+                localStorage.removeItem('oliveyCart');
                 cart = [];
                 renderCart();
-            } else {
-                alert('الرجاء إضافة منتجات للسلة أولاً.');
+
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                alert("حدث خطأ أثناء تسجيل الطلب. الرجاء التحقق من اتصالك بالإنترنت ومن إعدادات Firebase.");
             }
         }
-
-        // تشغيل العرض عند تحميل الصفحة
-        window.onload = renderCart;
     </script>
 </body>
 </html>
