@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دخول المسؤول | Olivey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3d5a28;
+            --secondary-color: #8ea604;
+            --accent-color: #f4a261;
+            --light-bg: #f9fdf5;
+            --text-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* تصميم الهيدر */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* تنسيق نموذج الدخول */
+        .login-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .login-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            text-align: right;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-top: 10px;
+        }
+
+        /* تذييل الصفحة (Footer) */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .login-container {
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">Olivey 🌿</div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="products.html">المنتجات</a></li>
+                <li><a href="cart.html">سلة الشراء</a></li>
+                <li><a href="login.html">دخول المسؤول</a></li>
+            </ul>
+            <div class="contact-info">
+                اتصل بنا: 201018563500+ 📞
+            </div>
+        </nav>
+    </header>
+
+    <main class="login-container">
+        <h2>دخول المسؤول</h2>
+        
+        <div class="form-group" style="width: 100%;">
+            <label for="username">اسم المستخدم</label>
+            <input type="text" id="username" value="admin" disabled>
+        </div>
+
+        <div class="form-group" style="width: 100%;">
+            <label for="password">كلمة المرور</label>
+            <input type="password" id="password" required>
+        </div>
+
+        <button class="login-btn" onclick="handleLogin()">دخول</button>
+        
+        <p id="error-message" class="error-message"></p>
+
+    </main>
+
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2023 Olivey</p>
+    </footer>
+
+    <script>
+        // دالة التعامل مع محاولة الدخول
+        function handleLogin() {
+            const passwordInput = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+            
+            // كلمة المرور الافتراضية للمسؤول (يمكنك تغييرها)
+            const correctPassword = "admin123"; 
+
+            if (passwordInput === correctPassword) {
+                // في الموقع الحقيقي: يتم توجيه المستخدم لصفحة لوحة التحكم (dashboard.html)
+                // هنا: رسالة نجاح ثم توجيه للمنتجات
+                alert("تم الدخول بنجاح! سيتم توجيهك إلى لوحة التحكم.");
+                // استخدام Local Storage لـ (جلسة الدخول)
+                localStorage.setItem('isAdminLoggedIn', 'true'); 
+                window.location.href = 'products.html'; // توجيه مؤقت لصفحة المنتجات
+            } else {
+                errorMessage.textContent = "اسم المستخدم أو كلمة المرور غير صحيحة.";
+                document.getElementById('password').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
