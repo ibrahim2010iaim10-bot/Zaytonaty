@@ -53,6 +53,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
         import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 
+        // مفاتيحك الخاصة
         const firebaseConfig = {
             apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM",
             authDomain: "zaytonaty-f4240.firebaseapp.com",
@@ -71,10 +72,9 @@
     </script>
     
     <script>
-        // 1. التحقق من حالة الدخول (التأكد أن المسؤول سجل الدخول)
+        // 1. التحقق من حالة الدخول
         if (localStorage.getItem('isAdminLoggedIn') !== 'true') {
             alert("غير مصرح لك بالدخول. يرجى تسجيل الدخول أولاً.");
-            // يرجى التأكد أن لديك ملف login.html وأن كلمة السر هي 'admin123'
             window.location.href = 'login.html'; 
         }
 
@@ -88,24 +88,26 @@
         // دوال Firebase: تحديث وحذف الطلب
         // **********************************************
 
+        // لتحديث حالة الطلب في قاعدة البيانات السحابية
         async function updateOrderStatus(docId, newStatus) {
             if (!window.db) return alert("خطأ في اتصال Firebase.");
             const orderRef = doc(window.db, "orders", docId);
             try {
                 await updateDoc(orderRef, { status: newStatus });
-                renderOrders();
+                renderOrders(); // إعادة تحميل الطلبات بعد التحديث
             } catch (e) {
                 console.error("Error updating document: ", e);
                 alert("فشل تحديث حالة الطلب.");
             }
         }
         
+        // لحذف الطلب من قاعدة البيانات السحابية
         async function deleteOrder(docId) {
              if (!window.db) return alert("خطأ في اتصال Firebase.");
              if (confirm("هل أنت متأكد من حذف هذا الطلب نهائياً؟")) {
                 try {
                     await deleteDoc(doc(window.db, "orders", docId));
-                    renderOrders();
+                    renderOrders(); // إعادة تحميل الطلبات بعد الحذف
                 } catch (e) {
                     console.error("Error deleting document: ", e);
                     alert("فشل حذف الطلب.");
@@ -114,7 +116,7 @@
         }
 
         // **********************************************
-        // الدالة الأهم: renderOrders (القراءة السحابية)
+        // الدالة الأهم: renderOrders (القراءة من Firebase)
         // **********************************************
 
         async function renderOrders() {
@@ -130,6 +132,7 @@
             let orders = [];
 
             try {
+                // قراءة جميع الوثائق من مجموعة "orders" في Firebase
                 const snapshot = await getDocs(window.ordersCollection);
                 snapshot.forEach(doc => {
                     orders.push({ firebaseId: doc.id, ...doc.data() }); 
@@ -145,6 +148,7 @@
                 return;
             }
 
+            // عرض الطلبات
             listContainer.innerHTML = '';
             orders.forEach(order => {
                 const orderCard = document.createElement('div');
