@@ -6,187 +6,31 @@
     <title>Olivey | زيت الزيتون البكر الممتاز</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #3d5a28; /* الأخضر الزيتوني الداكن */
-            --secondary-color: #8ea604; /* الأخضر الزيتوني الفاتح/المشرق */
-            --accent-color: #f4a261; /* لون الديكور (بني فاتح) */
-            --light-bg: #f9fdf5; /* خلفية فاتحة جداً */
-            --text-color: #333;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        body {
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* تصميم الهيدر (القائمة العلوية) */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary-color);
-        }
-
-        .contact-info {
-            font-size: 0.9rem;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        /* تصميم قسم الهيرو (Hero Section) */
-        .hero {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 5rem 5%;
-            text-align: center;
-            background-image: url('https://via.placeholder.com/1200x400/3d5a28/ffffff?text=Premium+Olive+Oil'); /* صورة توضيحية */
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(61, 90, 40, 0.7); /* طبقة خضراء داكنة */
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-
-        .btn-shop {
-            display: inline-block;
-            padding: 10px 30px;
-            background-color: var(--accent-color);
-            color: white;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-
-        .btn-shop:hover {
-            background-color: #e88d4d;
-        }
-
-        /* قسم المحتوى العام */
-        .content-section {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 5%;
-            text-align: center;
-            flex-grow: 1;
-        }
-
-        .content-section h2 {
-            color: var(--secondary-color);
-            margin-bottom: 25px;
-            font-size: 2rem;
-        }
-
-        .features-grid {
-            display: flex;
-            justify-content: space-around;
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .feature-item {
-            flex-basis: 30%;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .feature-item h3 {
-            color: var(--primary-color);
-            margin-top: 10px;
-        }
-
-        /* تذييل الصفحة (Footer) */
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: auto;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .features-grid {
-                flex-direction: column;
-            }
-        }
+        :root { --primary-color: #3d5a28; --secondary-color: #8ea604; --accent-color: #f4a261; --light-bg: #f9fdf5; --text-color: #333; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--light-bg); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; }
+        header { background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--secondary-color); }
+        .contact-info { font-size: 0.9rem; color: var(--primary-color); font-weight: bold; }
+        .hero { background-color: var(--primary-color); color: white; padding: 5rem 5%; text-align: center; background-image: url('https://via.placeholder.com/1200x400/3d5a28/ffffff?text=Premium+Olive+Oil'); background-size: cover; background-position: center; position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(61, 90, 40, 0.7); }
+        .hero-content { position: relative; z-index: 2; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; margin-bottom: 2rem; }
+        .btn-shop { display: inline-block; padding: 10px 30px; background-color: var(--accent-color); color: white; border-radius: 5px; font-weight: bold; transition: background-color 0.3s; }
+        .btn-shop:hover { background-color: #e88d4d; }
+        .content-section { max-width: 1200px; margin: 40px auto; padding: 0 5%; text-align: center; flex-grow: 1; }
+        .content-section h2 { color: var(--secondary-color); margin-bottom: 25px; font-size: 2rem; }
+        .features-grid { display: flex; justify-content: space-around; gap: 30px; margin-top: 30px; }
+        .feature-item { flex-basis: 30%; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .feature-item h3 { color: var(--primary-color); margin-top: 10px; }
+        footer { background-color: var(--primary-color); color: white; text-align: center; padding: 1.5rem; margin-top: auto; }
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 10px; } .hero h1 { font-size: 2.5rem; } .features-grid { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -235,6 +79,5 @@
     <footer>
         <p>جميع الحقوق محفوظة &copy; 2023 Olivey</p>
     </footer>
-
-    </body>
+</body>
 </html>
