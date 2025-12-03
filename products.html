@@ -6,13 +6,7 @@
     <title>المنتجات | Olivey</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #3d5a28;
-            --secondary-color: #8ea604;
-            --accent-color: #f4a261;
-            --light-bg: #f9fdf5;
-            --text-color: #333;
-        }
+        :root { --primary-color: #3d5a28; --secondary-color: #8ea604; --accent-color: #f4a261; --light-bg: #f9fdf5; --text-color: #333; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         body { background-color: var(--light-bg); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
         a { text-decoration: none; color: inherit; }
@@ -62,21 +56,17 @@
     </footer>
 
     <script>
-        // دالة لعرض رسالة سريعة
         function showMessage(text) {
             alert(text);
         }
 
-        // المنتجات المتوفرة (المنتجات التي اخترتها فقط)
         const products = [
             { id: 1, name: 'زيت زيتون بكر ممتاز - 1 لتر', price: 250, image: 'https://via.placeholder.com/300x200?text=Oil+1L' },
             { id: 2, name: 'زيت زيتون بكر ممتاز - 5 لتر', price: 1100, image: 'https://via.placeholder.com/300x200?text=Oil+5L' },
         ];
 
-        // قراءة السلة من Local Storage أو إنشاء سلة فارغة
         let cart = JSON.parse(localStorage.getItem('oliveyCart')) || [];
 
-        // دالة لإضافة المنتج إلى السلة
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             if (product) {
@@ -88,16 +78,14 @@
                     cart.push({ ...product, quantity: 1 });
                 }
 
-                // حفظ السلة المحدثة محلياً (قبل Checkout)
                 localStorage.setItem('oliveyCart', JSON.stringify(cart));
                 showMessage(`تمت إضافة ${product.name} إلى السلة!`);
             }
         }
 
-        // دالة لعرض المنتجات
         function renderProducts() {
             const container = document.getElementById('products-list');
-            container.innerHTML = '<h2>منتجاتنا المميزة</h2>'; // تحديث العنوان
+            container.innerHTML = '<h2>منتجاتنا المميزة</h2>';
 
             products.forEach(product => {
                 const card = document.createElement('div');
@@ -114,7 +102,6 @@
             });
         }
 
-        // تشغيل العرض عند تحميل الصفحة
         window.onload = renderProducts;
     </script>
 </body>
