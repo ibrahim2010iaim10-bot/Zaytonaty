@@ -13,153 +13,27 @@
             --light-bg: #f9fdf5;
             --text-color: #333;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        body {
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* تصميم الهيدر (القائمة العلوية) */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary-color);
-        }
-
-        .contact-info {
-            font-size: 0.9rem;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-        
-        /* تنسيق المنتجات */
-        .products-container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 5%;
-            display: grid;
-            /* عرض المنتجات في صف واحد إذا كان المنتج قليل */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            flex-grow: 1; 
-            justify-content: center; /* توسيط العناصر عند عرضها في صف واحد */
-        }
-
-        .product-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            text-align: center;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 1px solid #eee;
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-info h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .price {
-            font-size: 1.5rem;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-
-        .btn-add {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn-add:hover {
-            background-color: var(--primary-color);
-        }
-
-        /* تذييل الصفحة (Footer) */
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: auto;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--light-bg); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; }
+        header { background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--secondary-color); }
+        .contact-info { font-size: 0.9rem; color: var(--primary-color); font-weight: bold; }
+        .products-container { max-width: 1200px; margin: 30px auto; padding: 0 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; flex-grow: 1; justify-content: center; }
+        .product-card { background-color: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center; overflow: hidden; transition: transform 0.3s; }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #eee; }
+        .product-info { padding: 20px; }
+        .product-info h3 { color: var(--primary-color); margin-bottom: 10px; }
+        .price { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 15px; font-weight: bold; }
+        .btn-add { display: block; width: 100%; padding: 10px; background-color: var(--secondary-color); color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+        .btn-add:hover { background-color: var(--primary-color); }
+        footer { background-color: var(--primary-color); color: white; text-align: center; padding: 1.5rem; margin-top: auto; }
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 10px; } }
     </style>
 </head>
 <body>
@@ -193,7 +67,7 @@
             alert(text);
         }
 
-        // المنتجات المتوفرة (تم تعديلها حسب طلبك)
+        // المنتجات المتوفرة (المنتجات التي اخترتها فقط)
         const products = [
             { id: 1, name: 'زيت زيتون بكر ممتاز - 1 لتر', price: 250, image: 'https://via.placeholder.com/300x200?text=Oil+1L' },
             { id: 2, name: 'زيت زيتون بكر ممتاز - 5 لتر', price: 1100, image: 'https://via.placeholder.com/300x200?text=Oil+5L' },
@@ -214,7 +88,7 @@
                     cart.push({ ...product, quantity: 1 });
                 }
 
-                // حفظ السلة المحدثة
+                // حفظ السلة المحدثة محلياً (قبل Checkout)
                 localStorage.setItem('oliveyCart', JSON.stringify(cart));
                 showMessage(`تمت إضافة ${product.name} إلى السلة!`);
             }
