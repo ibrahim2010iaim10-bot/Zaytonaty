@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olivey | متجر زيت الزيتون</title>
+    <title>Olivey | زيت الزيتون البكر الممتاز</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* إعدادات عامة */
         :root {
-            --primary-color: #3d5a28; /* لون زيتوني غامق */
-            --secondary-color: #8ea604; /* لون زيتوني فاتح */
-            --accent-color: #f4a261; /* لون برتقالي للتباين */
-            --light-bg: #f9fdf5;
+            --primary-color: #3d5a28; /* الأخضر الزيتوني الداكن */
+            --secondary-color: #8ea604; /* الأخضر الزيتوني الفاتح/المشرق */
+            --accent-color: #f4a261; /* لون الديكور (بني فاتح) */
+            --light-bg: #f9fdf5; /* خلفية فاتحة جداً */
             --text-color: #333;
         }
 
@@ -26,6 +25,9 @@
             background-color: var(--light-bg);
             color: var(--text-color);
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         a {
@@ -78,46 +80,90 @@
             font-weight: bold;
         }
 
-        /* تصميم القسم الرئيسي (Hero Section) */
+        /* تصميم قسم الهيرو (Hero Section) */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5rem 5%;
+            text-align: center;
+            background-image: url('https://via.placeholder.com/1200x400/3d5a28/ffffff?text=Premium+Olive+Oil'); /* صورة توضيحية */
             background-size: cover;
             background-position: center;
-            height: 80vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 20px;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(61, 90, 40, 0.7); /* طبقة خضراء داكنة */
         }
 
-        .hero-content h1 {
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        .hero-content p {
+        .hero p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        .btn {
+        .btn-shop {
             display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--secondary-color);
+            padding: 10px 30px;
+            background-color: var(--accent-color);
             color: white;
             border-radius: 5px;
-            font-size: 1.1rem;
-            transition: background 0.3s;
+            font-weight: bold;
+            transition: background-color 0.3s;
         }
 
-        .btn:hover {
-            background-color: var(--primary-color);
+        .btn-shop:hover {
+            background-color: #e88d4d;
+        }
+
+        /* قسم المحتوى العام */
+        .content-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .content-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        .features-grid {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            flex-basis: 30%;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .feature-item h3 {
+            color: var(--primary-color);
+            margin-top: 10px;
         }
 
         /* تذييل الصفحة (Footer) */
@@ -129,14 +175,16 @@
             margin-top: auto;
         }
 
-        /* استجابة للشاشات الصغيرة */
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
                 gap: 10px;
             }
-            .hero-content h1 {
-                font-size: 2rem;
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .features-grid {
+                flex-direction: column;
             }
         }
     </style>
@@ -160,9 +208,27 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1>أهلاً بكم في أفضل متجر لزيت الزيتون</h1>
-            <p>زيت زيتون بكر ممتاز عالي الجودة، من المزرعة إلى مائدتك مباشرة.</p>
-            <a href="products.html" class="btn">تسوق الآن</a>
+            <h1>أفضل زيت زيتون بكر ممتاز</h1>
+            <p>عصرة أولى على البارد، نقاء لا مثيل له من مزارعنا مباشرة إليك.</p>
+            <a href="products.html" class="btn-shop">تسوق الآن</a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>لماذا تختار زيت Olivey؟</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <h3>طبيعي 100%</h3>
+                <p>منتج عضوي دون أي إضافات أو مواد حافظة.</p>
+            </div>
+            <div class="feature-item">
+                <h3>عصرة باردة</h3>
+                <p>أفضل طرق العصر للحفاظ على الفوائد الغذائية والنكهة.</p>
+            </div>
+            <div class="feature-item">
+                <h3>جودة مضمونة</h3>
+                <p>نخبة من الزيتون يتم انتقاؤها بعناية فائقة.</p>
+            </div>
         </div>
     </section>
 
@@ -170,5 +236,5 @@
         <p>جميع الحقوق محفوظة &copy; 2023 Olivey</p>
     </footer>
 
-</body>
+    </body>
 </html>
