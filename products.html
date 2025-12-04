@@ -3,108 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر زيت الزيتون | المنتجات</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="تصفح جميع منتجات زيت الزيتون - أصلي، عضوي، معطر">
+    <title>زيتون | منتجات زيت الزيتون</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/products.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
-<body dir="rtl">
-    <!-- Header -->
-    <header>
+<body>
+    <!-- شريط التنقل العلوي -->
+    <header class="main-header">
         <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-olive-branch"></i>
-                    <h1 id="site-title">متجر زيت الزيتون</h1>
-                </div>
-                
-                <nav>
-                    <ul>
-                        <li><a href="index.html" id="nav-home">الرئيسية</a></li>
-                        <li><a href="products.html" class="active" id="nav-products">المنتجات</a></li>
-                        <li><a href="cart.html" id="nav-cart">سلة التسوق</a></li>
-                        <li><a href="admin.html" id="nav-admin">لوحة المسؤول</a></li>
-                    </ul>
-                </nav>
-                
-                <div class="lang-switcher">
-                    <button class="lang-btn active" data-lang="ar">عربي</button>
-                    <button class="lang-btn" data-lang="en">English</button>
-                </div>
-                
-                <div class="cart-icon" id="cart-icon">
-                    <a href="cart.html">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-olive-branch"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="brand-name">زيتون</span>
+                        <span class="brand-tag">Zaytoun</span>
+                    </div>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="products.html" class="nav-link active"><i class="fas fa-shopping-bag"></i> المنتجات</a></li>
+                    <li><a href="cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> السلة <span class="cart-badge" id="cartCountHeader">0</span></a></li>
+                    <li><a href="admin.html" class="nav-link"><i class="fas fa-user-cog"></i> المسؤول</a></li>
+                </ul>
+
+                <div class="store-tools">
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="ar">عربي</button>
+                        <button class="lang-btn" data-lang="en">English</button>
+                    </div>
+
+                    <a href="cart.html" class="cart-btn">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cart-count">0</span>
+                        <span class="cart-count" id="cartCount">0</span>
                     </a>
+
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
-            </div>
+            </nav>
         </div>
     </header>
 
-    <!-- Products Section -->
-    <section class="products-section">
+    <!-- صفحة المنتجات -->
+    <main class="products-page">
         <div class="container">
-            <h1 class="page-title" id="products-page-title">منتجاتنا المميزة</h1>
-            
-            <!-- Filter Section -->
-            <div class="filter-section">
-                <div class="filter-options">
-                    <select id="category-filter" class="filter-select">
-                        <option value="all" id="filter-all">جميع الفئات</option>
-                        <option value="virgin" id="filter-virgin">زيت زيتون بكر</option>
-                        <option value="organic" id="filter-organic">زيت زيتون عضوي</option>
-                        <option value="infused" id="filter-infused">زيت زيتون معطر</option>
-                    </select>
-                    
-                    <select id="sort-filter" class="filter-select">
-                        <option value="default" id="sort-default">الترتيب الافتراضي</option>
-                        <option value="price-low" id="sort-price-low">السعر: من الأقل للأعلى</option>
-                        <option value="price-high" id="sort-price-high">السعر: من الأعلى للأقل</option>
-                        <option value="name" id="sort-name">الاسم: أ-ي</option>
-                    </select>
-                </div>
-                
+            <!-- رأس الصفحة -->
+            <div class="page-header">
+                <h1 class="page-title" data-lang-key="productsPageTitle">منتجات زيت الزيتون</h1>
+                <p class="page-subtitle" data-lang-key="productsPageDesc">اكتشف مجموعة واسعة من أجود أنواع زيت الزيتون</p>
+            </div>
+
+            <!-- أدوات التصفية والبحث -->
+            <div class="products-tools">
                 <div class="search-box">
-                    <input type="text" id="product-search" placeholder="ابحث عن منتج..." id="search-placeholder">
-                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="productSearch" placeholder="ابحث عن منتج..." data-lang-key="searchPlaceholder">
+                    <button class="search-btn" data-lang-key="search">بحث</button>
+                </div>
+
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="categoryFilter" data-lang-key="category">الفئة:</label>
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="all" data-lang-key="allCategories">جميع الفئات</option>
+                            <option value="extra-virgin" data-lang-key="extraVirgin">زيت زيتون بكر ممتاز</option>
+                            <option value="organic" data-lang-key="organic">زيت زيتون عضوي</option>
+                            <option value="infused" data-lang-key="infused">زيت زيتون معطر</option>
+                            <option value="premium" data-lang-key="premium">زيت زيتون فاخر</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="sortFilter" data-lang-key="sortBy">ترتيب حسب:</label>
+                        <select id="sortFilter" class="filter-select">
+                            <option value="default" data-lang-key="defaultSort">الترتيب الافتراضي</option>
+                            <option value="price-low" data-lang-key="priceLow">السعر: من الأقل للأعلى</option>
+                            <option value="price-high" data-lang-key="priceHigh">السعر: من الأعلى للأقل</option>
+                            <option value="name" data-lang-key="name">الاسم</option>
+                            <option value="popular" data-lang-key="popular">الأكثر شيوعاً</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-outline" id="resetFilters" data-lang-key="resetFilters">
+                        <i class="fas fa-redo"></i> إعادة التعيين
+                    </button>
                 </div>
             </div>
-            
-            <!-- Products Grid -->
-            <div class="products-grid" id="products-container">
-                <!-- Products will be loaded by JavaScript -->
+
+            <!-- شبكة المنتجات -->
+            <div class="products-container">
+                <div class="products-grid" id="productsGrid">
+                    <!-- سيتم تعبئته بالمنتجات عبر JavaScript -->
+                </div>
+
+                <!-- حالة عدم وجود منتجات -->
+                <div class="no-products" id="noProducts" style="display: none;">
+                    <i class="fas fa-box-open"></i>
+                    <h3 data-lang-key="noProductsTitle">لا توجد منتجات</h3>
+                    <p data-lang-key="noProductsDesc">لم نعثر على منتجات تطابق بحثك</p>
+                    <button class="btn btn-primary" id="clearSearch" data-lang-key="clearSearch">مسح البحث</button>
+                </div>
             </div>
-            
-            <!-- Pagination -->
+
+            <!-- الترقيم (Pagination) -->
             <div class="pagination" id="pagination">
-                <button class="page-btn" id="prev-page">السابق</button>
-                <span class="page-info" id="page-info">الصفحة 1 من 2</span>
-                <button class="page-btn" id="next-page">التالي</button>
+                <button class="pagination-btn prev" id="prevPage" disabled data-lang-key="previous">
+                    <i class="fas fa-chevron-right"></i> السابق
+                </button>
+                <div class="page-numbers" id="pageNumbers"></div>
+                <button class="pagination-btn next" id="nextPage" data-lang-key="next">
+                    التالي <i class="fas fa-chevron-left"></i>
+                </button>
             </div>
         </div>
-    </section>
+    </main>
 
-    <!-- Footer -->
-    <footer>
+    <!-- التذييل -->
+    <footer class="main-footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <i class="fas fa-olive-branch"></i>
-                    <span id="footer-title">متجر زيت الزيتون</span>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-olive-branch"></i>
+                        <div class="footer-logo-text">
+                            <h3>زيتون</h3>
+                            <p>Zaytoun Store</p>
+                        </div>
+                    </div>
+                    <p class="footer-description" data-lang-key="footerDesc">
+                        متجر زيت الزيتون الأصلي، نقدم أجود أنواع الزيوت الطبيعية والعضوية بجودة عالية وأسعار مناسبة.
+                    </p>
                 </div>
-                <div class="footer-links">
-                    <a href="index.html" id="footer-home">الرئيسية</a>
-                    <a href="products.html" id="footer-products">المنتجات</a>
-                    <a href="cart.html" id="footer-cart">سلة التسوق</a>
-                    <a href="admin.html" id="footer-admin">لوحة المسؤول</a>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title" data-lang-key="quickLinks">روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html" data-lang-key="home">الرئيسية</a></li>
+                        <li><a href="products.html" data-lang-key="products">المنتجات</a></li>
+                        <li><a href="cart.html" data-lang-key="cart">سلة التسوق</a></li>
+                        <li><a href="admin.html" data-lang-key="admin">لوحة المسؤول</a></li>
+                    </ul>
                 </div>
-                <p id="footer-description">نقدم لكم أجود أنواع زيت الزيتون الطبيعي من أفضل المزارع</p>
-                <p class="copyright" id="copyright">© 2023 متجر زيت الزيتون. جميع الحقوق محفوظة.</p>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title" data-lang-key="contactInfo">معلومات الاتصال</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-lang-key="address">شارع الزيتون، مدينة الرياض، المملكة العربية السعودية</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+966 50 123 4567</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@zaytoun-store.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">
+                    &copy; 2024 <span>زيتون</span>. جميع الحقوق محفوظة.
+                </p>
             </div>
         </div>
     </footer>
 
+    <!-- الأصول البرمجية -->
+    <script src="js/main.js"></script>
     <script src="js/language.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/products.js"></script>
