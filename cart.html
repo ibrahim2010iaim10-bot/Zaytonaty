@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر زيت الزيتون | سلة التسوق</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cart.css">
+</head>
+<body dir="rtl">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-olive-branch"></i>
+                    <h1 id="site-title">متجر زيت الزيتون</h1>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html" id="nav-home">الرئيسية</a></li>
+                        <li><a href="products.html" id="nav-products">المنتجات</a></li>
+                        <li><a href="cart.html" class="active" id="nav-cart">سلة التسوق</a></li>
+                        <li><a href="admin.html" id="nav-admin">لوحة المسؤول</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="ar">عربي</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
+                
+                <div class="cart-icon" id="cart-icon">
+                    <a href="cart.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <h1 class="page-title" id="cart-page-title">سلة التسوق</h1>
+            
+            <div class="cart-container">
+                <!-- Cart Items -->
+                <div class="cart-items-container">
+                    <div class="cart-header">
+                        <h2 id="cart-items-title">عناصر السلة</h2>
+                        <button class="btn clear-cart" id="clear-cart-btn">تفريغ السلة</button>
+                    </div>
+                    
+                    <div class="cart-items" id="cart-items">
+                        <!-- Cart items will be loaded by JavaScript -->
+                    </div>
+                    
+                    <div class="empty-cart" id="empty-cart-message">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3 id="empty-cart-title">سلة التسوق فارغة</h3>
+                        <p id="empty-cart-desc">لم تقم بإضافة أي منتجات إلى سلة التسوق بعد</p>
+                        <a href="products.html" class="btn" id="empty-cart-btn">تصفح المنتجات</a>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2 id="order-summary-title">ملخص الطلب</h2>
+                    
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span id="subtotal-text">المجموع الجزئي:</span>
+                            <span class="summary-value" id="subtotal">0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span id="shipping-text">تكاليف الشحن:</span>
+                            <span class="summary-value" id="shipping">5.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span id="total-text">المجموع الكلي:</span>
+                            <span class="summary-value" id="total">5.00</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Checkout Form -->
+                    <div class="checkout-form">
+                        <h3 id="customer-info-title">معلومات العميل</h3>
+                        
+                        <div class="form-group">
+                            <label for="customer-name" id="name-label">الاسم الكامل *</label>
+                            <input type="text" id="customer-name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customer-phone" id="phone-label">رقم الهاتف *</label>
+                            <input type="tel" id="customer-phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customer-address" id="address-label">العنوان *</label>
+                            <textarea id="customer-address" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customer-notes" id="notes-label">ملاحظات إضافية (اختياري)</label>
+                            <textarea id="customer-notes" rows="2"></textarea>
+                        </div>
+                        
+                        <button class="btn checkout-btn" id="checkout-btn">إتمام الطلب</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Success Modal -->
+    <div class="modal" id="order-success-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="order-success-title">تم استلام طلبك بنجاح!</h2>
+                <span class="close-modal" id="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <p id="order-success-message">شكراً لثقتك بنا. تم استلام طلبك بنجاح وسنتصل بك خلال 24 ساعة لتأكيد التفاصيل.</p>
+                <p id="order-number">رقم الطلب: <span id="order-id">ORD-001</span></p>
+                <div class="modal-actions">
+                    <button class="btn" id="continue-shopping-btn">مواصلة التسوق</button>
+                    <a href="index.html" class="btn secondary" id="back-home-btn">العودة للرئيسية</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-olive-branch"></i>
+                    <span id="footer-title">متجر زيت الزيتون</span>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html" id="footer-home">الرئيسية</a>
+                    <a href="products.html" id="footer-products">المنتجات</a>
+                    <a href="cart.html" id="footer-cart">سلة التسوق</a>
+                    <a href="admin.html" id="footer-admin">لوحة المسؤول</a>
+                </div>
+                <p id="footer-description">نقدم لكم أجود أنواع زيت الزيتون الطبيعي من أفضل المزارع</p>
+                <p class="copyright" id="copyright">© 2023 متجر زيت الزيتون. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/language.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+</html>
