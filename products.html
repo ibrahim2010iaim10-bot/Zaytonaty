@@ -3,106 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المنتجات | Olivey</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --primary-color: #3d5a28; --secondary-color: #8ea604; --accent-color: #f4a261; --light-bg: #f9fdf5; --text-color: #333; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background-color: var(--light-bg); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-        a { text-decoration: none; color: inherit; }
-        header { background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
-        .nav-links { list-style: none; display: flex; gap: 20px; }
-        .nav-links a { font-weight: 500; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--secondary-color); }
-        .contact-info { font-size: 0.9rem; color: var(--primary-color); font-weight: bold; }
-        .products-container { max-width: 1200px; margin: 30px auto; padding: 0 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; flex-grow: 1; justify-content: center; }
-        .product-card { background-color: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center; overflow: hidden; transition: transform 0.3s; }
-        .product-card:hover { transform: translateY(-5px); }
-        .product-card img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #eee; }
-        .product-info { padding: 20px; }
-        .product-info h3 { color: var(--primary-color); margin-bottom: 10px; }
-        .price { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 15px; font-weight: bold; }
-        .btn-add { display: block; width: 100%; padding: 10px; background-color: var(--secondary-color); color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
-        .btn-add:hover { background-color: var(--primary-color); }
-        footer { background-color: var(--primary-color); color: white; text-align: center; padding: 1.5rem; margin-top: auto; }
-        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 10px; } }
-    </style>
+    <title>متجر زيت الزيتون | المنتجات</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/products.css">
 </head>
-<body>
-
+<body dir="rtl">
+    <!-- Header -->
     <header>
-        <nav class="navbar">
-            <div class="logo">Olivey 🌿</div>
-            <ul class="nav-links">
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="products.html">المنتجات</a></li>
-                <li><a href="cart.html">سلة الشراء</a></li>
-                <li><a href="login.html">دخول المسؤول</a></li>
-            </ul>
-            <div class="contact-info">
-                اتصل بنا: 201018563500+ 📞
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-olive-branch"></i>
+                    <h1 id="site-title">متجر زيت الزيتون</h1>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html" id="nav-home">الرئيسية</a></li>
+                        <li><a href="products.html" class="active" id="nav-products">المنتجات</a></li>
+                        <li><a href="cart.html" id="nav-cart">سلة التسوق</a></li>
+                        <li><a href="admin.html" id="nav-admin">لوحة المسؤول</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="ar">عربي</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
+                
+                <div class="cart-icon" id="cart-icon">
+                    <a href="cart.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+                </div>
             </div>
-        </nav>
+        </div>
     </header>
 
-    <main class="products-container" id="products-list">
-        <h2>جاري تحميل المنتجات...</h2>
-    </main>
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <h1 class="page-title" id="products-page-title">منتجاتنا المميزة</h1>
+            
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-options">
+                    <select id="category-filter" class="filter-select">
+                        <option value="all" id="filter-all">جميع الفئات</option>
+                        <option value="virgin" id="filter-virgin">زيت زيتون بكر</option>
+                        <option value="organic" id="filter-organic">زيت زيتون عضوي</option>
+                        <option value="infused" id="filter-infused">زيت زيتون معطر</option>
+                    </select>
+                    
+                    <select id="sort-filter" class="filter-select">
+                        <option value="default" id="sort-default">الترتيب الافتراضي</option>
+                        <option value="price-low" id="sort-price-low">السعر: من الأقل للأعلى</option>
+                        <option value="price-high" id="sort-price-high">السعر: من الأعلى للأقل</option>
+                        <option value="name" id="sort-name">الاسم: أ-ي</option>
+                    </select>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="product-search" placeholder="ابحث عن منتج..." id="search-placeholder">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="products-grid" id="products-container">
+                <!-- Products will be loaded by JavaScript -->
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <button class="page-btn" id="prev-page">السابق</button>
+                <span class="page-info" id="page-info">الصفحة 1 من 2</span>
+                <button class="page-btn" id="next-page">التالي</button>
+            </div>
+        </div>
+    </section>
 
+    <!-- Footer -->
     <footer>
-        <p>جميع الحقوق محفوظة &copy; 2023 Olivey</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-olive-branch"></i>
+                    <span id="footer-title">متجر زيت الزيتون</span>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html" id="footer-home">الرئيسية</a>
+                    <a href="products.html" id="footer-products">المنتجات</a>
+                    <a href="cart.html" id="footer-cart">سلة التسوق</a>
+                    <a href="admin.html" id="footer-admin">لوحة المسؤول</a>
+                </div>
+                <p id="footer-description">نقدم لكم أجود أنواع زيت الزيتون الطبيعي من أفضل المزارع</p>
+                <p class="copyright" id="copyright">© 2023 متجر زيت الزيتون. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
     </footer>
 
-    <script>
-        function showMessage(text) {
-            alert(text);
-        }
-
-        const products = [
-            { id: 1, name: 'زيت زيتون بكر ممتاز - 1 لتر', price: 250, image: 'https://via.placeholder.com/300x200?text=Oil+1L' },
-            { id: 2, name: 'زيت زيتون بكر ممتاز - 5 لتر', price: 1100, image: 'https://via.placeholder.com/300x200?text=Oil+5L' },
-        ];
-
-        let cart = JSON.parse(localStorage.getItem('oliveyCart')) || [];
-
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                const existingItem = cart.find(item => item.id === productId);
-                
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    cart.push({ ...product, quantity: 1 });
-                }
-
-                localStorage.setItem('oliveyCart', JSON.stringify(cart));
-                showMessage(`تمت إضافة ${product.name} إلى السلة!`);
-            }
-        }
-
-        function renderProducts() {
-            const container = document.getElementById('products-list');
-            container.innerHTML = '<h2>منتجاتنا المميزة</h2>';
-
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
-                    <div class="product-info">
-                        <h3>${product.name}</h3>
-                        <div class="price">${product.price} جنيه مصري</div>
-                        <button class="btn-add" onclick="addToCart(${product.id})">أضف إلى السلة</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        window.onload = renderProducts;
-    </script>
+    <script src="js/language.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/products.js"></script>
 </body>
 </html>
