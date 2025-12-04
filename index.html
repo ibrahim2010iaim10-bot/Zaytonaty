@@ -3,272 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="متجر زيت الزيتون الأصلي - أجود أنواع زيت الزيتون الطبيعي والعضوي">
-    <title>زيتون | متجر زيت الزيتون الأصلي</title>
+    <title data-lang-key="page_title"></title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
-    <!-- شريط التنقل العلوي -->
-    <header class="main-header">
-        <div class="container">
-            <nav class="navbar">
-                <!-- الشعار -->
-                <a href="index.html" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-olive-branch"></i>
-                    </div>
-                    <div class="logo-text">
-                        <span class="brand-name">زيتون</span>
-                        <span class="brand-tag">Zaytoun</span>
-                    </div>
-                </a>
-
-                <!-- القائمة الرئيسية -->
-                <ul class="nav-menu">
-                    <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="products.html" class="nav-link"><i class="fas fa-shopping-bag"></i> المنتجات</a></li>
-                    <li><a href="cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> السلة <span class="cart-badge" id="cartCountHeader">0</span></a></li>
-                    <li><a href="admin.html" class="nav-link"><i class="fas fa-user-cog"></i> المسؤول</a></li>
-                </ul>
-
-                <!-- أدوات المتجر -->
-                <div class="store-tools">
-                    <!-- تبديل اللغة -->
-                    <div class="language-switcher">
-                        <button class="lang-btn active" data-lang="ar">عربي</button>
-                        <button class="lang-btn" data-lang="en">English</button>
-                    </div>
-
-                    <!-- زر السلة -->
-                    <a href="cart.html" class="cart-btn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </a>
-
-                    <!-- زر القائمة المنسدلة للجوال -->
-                    <button class="menu-toggle" id="menuToggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </nav>
-        </div>
+    <header>
+        <nav>
+            <a href="index.html" data-lang-key="nav_home"></a>
+            <a href="products.html" data-lang-key="nav_products"></a>
+            <a href="cart.html" data-lang-key="nav_cart"></a>
+            <a href="admin.html" data-lang-key="nav_admin"></a>
+        </nav>
+        <button id="lang-toggle"></button>
     </header>
 
-    <!-- قسم البطل (Hero) -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title" data-lang-key="heroTitle">زيت الزيتون الأصلي<br>جودة تراثية</h1>
-                    <p class="hero-description" data-lang-key="heroDescription">
-                        اكتشف أجود أنواع زيت الزيتون البكر الممتاز المستخلص بعناية من أفضل مزارع الزيتون في المنطقة. جودة استثنائية ونقاء في كل قطرة.
-                    </p>
-                    <div class="hero-actions">
-                        <a href="products.html" class="btn btn-primary" data-lang-key="shopNow">
-                            <i class="fas fa-shopping-cart"></i> تسوق الآن
-                        </a>
-                        <a href="#features" class="btn btn-secondary" data-lang-key="learnMore">
-                            <i class="fas fa-info-circle"></i> تعرف أكثر
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="image-container">
-                        <img src="https://images.unsplash.com/photo-1586773860418-dc22f8b874bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             alt="زيت زيتون طبيعي" 
-                             class="hero-img">
-                        <div class="floating-badge">
-                            <span>100%</span>
-                            <small>طبيعي</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <main>
+        <section class="hero">
+            <h1 data-lang-key="hero_title"></h1>
+            <p data-lang-key="hero_slogan"></p>
+            <a href="products.html" class="cta-button" data-lang-key="hero_cta"></a>
+        </section>
 
-    <!-- قسم المميزات -->
-    <section class="features-section" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-lang-key="whyChooseUs">لماذا تختار متجر زيتون؟</h2>
-                <p class="section-subtitle" data-lang-key="featuresSubtitle">نقدم لكم الأفضل بمعايير الجودة العالمية</p>
+        <section class="story-section section-padding">
+            <h2 data-lang-key="story_title"></h2>
+            <div class="story-content">
+                <p data-lang-key="story_p1"></p>
+                <p data-lang-key="story_p2"></p>
             </div>
-            
+        </section>
+
+        <section class="why-us section-padding bg-light">
+            <h2 data-lang-key="whyus_title"></h2>
             <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h3 class="feature-title" data-lang-key="feature1Title">منتجات عضوية</h3>
-                    <p class="feature-description" data-lang-key="feature1Desc">جميع منتجاتنا عضوية 100% وخالية من المواد الكيميائية والمبيدات</p>
+                <div class="feature">
+                    <h3 data-lang-key="feature_1_title"></h3>
+                    <p data-lang-key="feature_1_desc"></p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <h3 class="feature-title" data-lang-key="feature2Title">جودة عالية</h3>
-                    <p class="feature-description" data-lang-key="feature2Desc">نضمن أعلى معايير الجودة معتمدين من منظمات الجودة العالمية</p>
+                <div class="feature">
+                    <h3 data-lang-key="feature_2_title"></h3>
+                    <p data-lang-key="feature_2_desc"></p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shipping-fast"></i>
-                    </div>
-                    <h3 class="feature-title" data-lang-key="feature3Title">توصيل سريع</h3>
-                    <p class="feature-description" data-lang-key="feature3Desc">توصيل مجاني وسريع خلال 24-48 ساعة لجميع أنحاء البلاد</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3 class="feature-title" data-lang-key="feature4Title">دعم فني</h3>
-                    <p class="feature-description" data-lang-key="feature4Desc">فريق دعم فني متاح على مدار الساعة لخدمتكم واستفساراتكم</p>
+                <div class="feature">
+                    <h3 data-lang-key="feature_3_title"></h3>
+                    <p data-lang-key="feature_3_desc"></p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
+    
+    <footer><p data-lang-key="footer_text"></p></footer>
 
-    <!-- قسم المنتجات المميزة -->
-    <section class="featured-products">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title" data-lang-key="featuredProducts">منتجات مميزة</h2>
-                <p class="section-subtitle" data-lang-key="bestSellers">أفضل المنتجات مبيعاً</p>
-            </div>
-            
-            <div class="products-grid" id="featuredProducts">
-                <!-- سيتم تعبئته بالمنتجات عبر JavaScript -->
-            </div>
-            
-            <div class="text-center">
-                <a href="products.html" class="btn btn-outline" data-lang-key="viewAllProducts">
-                    <i class="fas fa-store"></i> عرض جميع المنتجات
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- قسم العروض الخاصة -->
-    <section class="special-offers">
-        <div class="container">
-            <div class="offer-banner">
-                <div class="offer-content">
-                    <h3 class="offer-title" data-lang-key="specialOffer">عرض خاص!</h3>
-                    <p class="offer-description" data-lang-key="offerDesc">خصم 20% على جميع منتجات زيت الزيتون العضوي</p>
-                    <div class="offer-timer">
-                        <div class="timer-item">
-                            <span class="timer-number" id="days">00</span>
-                            <span class="timer-label" data-lang-key="days">أيام</span>
-                        </div>
-                        <div class="timer-item">
-                            <span class="timer-number" id="hours">00</span>
-                            <span class="timer-label" data-lang-key="hours">ساعات</span>
-                        </div>
-                        <div class="timer-item">
-                            <span class="timer-number" id="minutes">00</span>
-                            <span class="timer-label" data-lang-key="minutes">دقائق</span>
-                        </div>
-                        <div class="timer-item">
-                            <span class="timer-number" id="seconds">00</span>
-                            <span class="timer-label" data-lang-key="seconds">ثواني</span>
-                        </div>
-                    </div>
-                    <a href="products.html" class="btn btn-primary" data-lang-key="shopNow">استفد من العرض</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- التذييل -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <i class="fas fa-olive-branch"></i>
-                        <div class="footer-logo-text">
-                            <h3>زيتون</h3>
-                            <p>Zaytoun Store</p>
-                        </div>
-                    </div>
-                    <p class="footer-description" data-lang-key="footerDesc">
-                        متجر زيت الزيتون الأصلي، نقدم أجود أنواع الزيوت الطبيعية والعضوية بجودة عالية وأسعار مناسبة.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h4 class="footer-title" data-lang-key="quickLinks">روابط سريعة</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html" data-lang-key="home">الرئيسية</a></li>
-                        <li><a href="products.html" data-lang-key="products">المنتجات</a></li>
-                        <li><a href="cart.html" data-lang-key="cart">سلة التسوق</a></li>
-                        <li><a href="admin.html" data-lang-key="admin">لوحة المسؤول</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4 class="footer-title" data-lang-key="contactInfo">معلومات الاتصال</h4>
-                    <ul class="contact-info">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span data-lang-key="address">شارع الزيتون، مدينة الرياض، المملكة العربية السعودية</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+966 50 123 4567</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>info@zaytoun-store.com</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4 class="footer-title" data-lang-key="newsletter">النشرة البريدية</h4>
-                    <p class="newsletter-desc" data-lang-key="newsletterDesc">
-                        اشترك في نشرتنا البريدية لتصلك أحدث العروض والمنتجات الجديدة
-                    </p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="بريدك الإلكتروني" required>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p class="copyright">
-                    &copy; 2024 <span>زيتون</span>. جميع الحقوق محفوظة.
-                </p>
-                <div class="footer-bottom-links">
-                    <a href="#" data-lang-key="privacy">سياسة الخصوصية</a>
-                    <a href="#" data-lang-key="terms">الشروط والأحكام</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- الأصول البرمجية -->
+    <script src="js/lang.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/language.js"></script>
-    <script src="js/cart.js"></script>
 </body>
-                            </html>
+</html>
