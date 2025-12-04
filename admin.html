@@ -3,201 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر زيت الزيتون | لوحة المسؤول</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title data-lang-key="page_title_admin"></title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/admin.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 </head>
-<body dir="rtl">
-    <!-- Header -->
+<body>
     <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-olive-branch"></i>
-                    <h1 id="site-title">متجر زيت الزيتون</h1>
-                </div>
-                
-                <nav>
-                    <ul>
-                        <li><a href="index.html" id="nav-home">الرئيسية</a></li>
-                        <li><a href="products.html" id="nav-products">المنتجات</a></li>
-                        <li><a href="cart.html" id="nav-cart">سلة التسوق</a></li>
-                        <li><a href="admin.html" class="active" id="nav-admin">لوحة المسؤول</a></li>
-                    </ul>
-                </nav>
-                
-                <div class="lang-switcher">
-                    <button class="lang-btn active" data-lang="ar">عربي</button>
-                    <button class="lang-btn" data-lang="en">English</button>
-                </div>
-                
-                <div class="cart-icon" id="cart-icon">
-                    <a href="cart.html">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cart-count">0</span>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <h1 data-lang-key="admin_header"></h1>
+        <button id="logout-button" data-lang-key="logout_btn" style="display:none;"></button>
     </header>
 
-    <!-- Admin Section -->
-    <section class="admin-section">
-        <div class="container">
-            <h1 class="page-title" id="admin-page-title">لوحة تحكم المسؤول</h1>
-            
-            <!-- Admin Login (if not logged in) -->
-            <div class="admin-login" id="admin-login">
-                <h2 id="login-title">تسجيل الدخول للمسؤول</h2>
-                <div class="login-form">
-                    <div class="form-group">
-                        <label for="admin-username" id="username-label">اسم المستخدم</label>
-                        <input type="text" id="admin-username" placeholder="admin">
-                    </div>
-                    <div class="form-group">
-                        <label for="admin-password" id="password-label">كلمة المرور</label>
-                        <input type="password" id="admin-password" placeholder="••••••••">
-                    </div>
-                    <button class="btn" id="login-btn">تسجيل الدخول</button>
-                </div>
-            </div>
-            
-            <!-- Admin Dashboard (if logged in) -->
-            <div class="admin-dashboard" id="admin-dashboard" style="display: none;">
-                <!-- Admin Actions -->
-                <div class="admin-actions">
-                    <button class="btn admin-btn" id="refresh-orders">
-                        <i class="fas fa-sync-alt"></i> تحديث الطلبات
-                    </button>
-                    <button class="btn admin-btn secondary" id="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
-                    </button>
-                </div>
-                
-                <!-- Stats Overview -->
-                <div class="stats-overview">
-                    <div class="stat-card">
-                        <div class="stat-icon pending">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="pending-orders">الطلبات المعلقة</h3>
-                            <p class="stat-number" id="pending-count">0</p>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon processing">
-                            <i class="fas fa-cog"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="processing-orders">الطلبات قيد المعالجة</h3>
-                            <p class="stat-number" id="processing-count">0</p>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon completed">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="completed-orders">الطلبات المكتملة</h3>
-                            <p class="stat-number" id="completed-count">0</p>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon total">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="total-orders">إجمالي الطلبات</h3>
-                            <p class="stat-number" id="total-count">0</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Orders Table -->
-                <div class="orders-table-container">
-                    <h2 id="orders-table-title">الطلبات الحديثة</h2>
-                    
-                    <!-- Order Status Filter -->
-                    <div class="order-filter">
-                        <select id="order-status-filter" class="filter-select">
-                            <option value="all" id="filter-all-orders">جميع الطلبات</option>
-                            <option value="pending" id="filter-pending">المعلقة</option>
-                            <option value="processing" id="filter-processing">قيد المعالجة</option>
-                            <option value="completed" id="filter-completed">المكتملة</option>
-                            <option value="cancelled" id="filter-cancelled">الملغاة</option>
-                        </select>
-                    </div>
-                    
-                    <div class="table-responsive">
-                        <table class="orders-table">
-                            <thead>
-                                <tr>
-                                    <th id="order-id-header">رقم الطلب</th>
-                                    <th id="customer-header">العميل</th>
-                                    <th id="date-header">التاريخ</th>
-                                    <th id="total-header">المجموع</th>
-                                    <th id="status-header">الحالة</th>
-                                    <th id="actions-header">الإجراءات</th>
-                                </tr>
-                            </thead>
-                            <tbody id="orders-table-body">
-                                <!-- Orders will be loaded by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="no-orders" id="no-orders-message">
-                        <i class="fas fa-clipboard-list"></i>
-                        <h3 id="no-orders-title">لا توجد طلبات حالياً</h3>
-                        <p id="no-orders-desc">لم يتم تقديم أي طلبات بعد</p>
-                    </div>
-                </div>
-                
-                <!-- Order Details Modal -->
-                <div class="modal" id="order-details-modal">
-                    <div class="modal-content large">
-                        <div class="modal-header">
-                            <h2 id="order-details-title">تفاصيل الطلب <span id="modal-order-id"></span></h2>
-                            <span class="close-modal" id="close-order-modal">&times;</span>
-                        </div>
-                        <div class="modal-body">
-                            <div class="order-details-container">
-                                <!-- Order details will be loaded by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <main>
+        <section id="login-section" class="section-padding">
+            <h2 data-lang-key="login_title"></h2>
+            <form id="admin-login-form">
+                <input type="email" id="admin-email" placeholder="البريد الإلكتروني" required>
+                <input type="password" id="admin-password" placeholder="كلمة المرور" required>
+                <button type="submit" data-lang-key="login_btn"></button>
+                <p id="login-error" style="color: red; display:none;"></p>
+            </form>
+        </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <i class="fas fa-olive-branch"></i>
-                    <span id="footer-title">متجر زيت الزيتون</span>
-                </div>
-                <div class="footer-links">
-                    <a href="index.html" id="footer-home">الرئيسية</a>
-                    <a href="products.html" id="footer-products">المنتجات</a>
-                    <a href="cart.html" id="footer-cart">سلة التسوق</a>
-                    <a href="admin.html" id="footer-admin">لوحة المسؤول</a>
-                </div>
-                <p id="footer-description">نقدم لكم أجود أنواع زيت الزيتون الطبيعي من أفضل المزارع</p>
-                <p class="copyright" id="copyright">© 2023 متجر زيت الزيتون. جميع الحقوق محفوظة.</p>
-            </div>
-        </div>
-    </footer>
+        <section id="orders-section" class="section-padding" style="display:none;">
+            <h2 data-lang-key="orders_list_header"></h2>
+            <table id="orders-table">
+                <thead>
+                    <tr>
+                        <th data-lang-key="order_id"></th>
+                        <th data-lang-key="order_date"></th>
+                        <th data-lang-key="order_total"></th>
+                        <th data-lang-key="order_status"></th>
+                        <th data-lang-key="order_details"></th>
+                        <th data-lang-key="order_update"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </section>
+    </main>
 
-    <script src="js/language.js"></script>
-    <script src="js/cart.js"></script>
     <script src="js/admin.js"></script>
 </body>
 </html>
