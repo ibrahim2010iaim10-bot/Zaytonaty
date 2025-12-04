@@ -3,253 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="سلة تسوق متجر زيت الزيتون - أتمم طلبك الآن">
-    <title>زيتون | سلة التسوق</title>
+    <title data-lang-key="page_title_cart"></title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/cart.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
-    <!-- شريط التنقل العلوي -->
-    <header class="main-header">
-        <div class="container">
-            <nav class="navbar">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-olive-branch"></i>
-                    </div>
-                    <div class="logo-text">
-                        <span class="brand-name">زيتون</span>
-                        <span class="brand-tag">Zaytoun</span>
-                    </div>
-                </a>
-
-                <ul class="nav-menu">
-                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="products.html" class="nav-link"><i class="fas fa-shopping-bag"></i> المنتجات</a></li>
-                    <li><a href="cart.html" class="nav-link active"><i class="fas fa-shopping-cart"></i> السلة <span class="cart-badge" id="cartCountHeader">0</span></a></li>
-                    <li><a href="admin.html" class="nav-link"><i class="fas fa-user-cog"></i> المسؤول</a></li>
-                </ul>
-
-                <div class="store-tools">
-                    <div class="language-switcher">
-                        <button class="lang-btn active" data-lang="ar">عربي</button>
-                        <button class="lang-btn" data-lang="en">English</button>
-                    </div>
-
-                    <a href="cart.html" class="cart-btn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </a>
-
-                    <button class="menu-toggle" id="menuToggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </nav>
-        </div>
+    <header>
+        <nav>
+            <a href="index.html" data-lang-key="nav_home"></a>
+            <a href="products.html" data-lang-key="nav_products"></a>
+            <a href="cart.html" data-lang-key="nav_cart"></a>
+            <a href="admin.html" data-lang-key="nav_admin"></a>
+        </nav>
+        <button id="lang-toggle"></button>
     </header>
 
-    <!-- صفحة السلة -->
-    <main class="cart-page">
-        <div class="container">
-            <div class="page-header">
-                <h1 class="page-title" data-lang-key="cartTitle">سلة التسوق</h1>
-                <p class="page-subtitle" data-lang-key="cartSubtitle">راجع مشترياتك وأتمم طلبك</p>
+    <main>
+        <section class="page-header section-padding">
+            <h1 data-lang-key="cart_header"></h1>
+        </section>
+
+        <section class="cart-details section-padding">
+            <table id="cart-table">
+                <thead>
+                    <tr>
+                        <th data-lang-key="cart_item"></th>
+                        <th data-lang-key="cart_price"></th>
+                        <th data-lang-key="cart_quantity"></th>
+                        <th data-lang-key="cart_subtotal"></th>
+                    </tr>
+                </thead>
+                <tbody id="cart-body">
+                    </tbody>
+            </table>
+
+            <div class="checkout-summary">
+                <h3 data-lang-key="summary_title"></h3>
+                <p><span data-lang-key="summary_total"></span>: <span id="cart-total">0</span></p>
+                <button id="checkout-button" data-lang-key="checkout_btn"></button>
             </div>
-
-            <div class="cart-container">
-                <!-- قسم عناصر السلة -->
-                <div class="cart-items-section">
-                    <div class="section-header">
-                        <h2 data-lang-key="cartItems">عناصر السلة</h2>
-                        <button class="btn btn-danger" id="clearCartBtn" data-lang-key="clearCart">
-                            <i class="fas fa-trash"></i> تفريغ السلة
-                        </button>
-                    </div>
-
-                    <div class="cart-items-list" id="cartItemsList">
-                        <!-- سيتم تعبئته عبر JavaScript -->
-                    </div>
-
-                    <!-- حالة السلة الفارغة -->
-                    <div class="empty-cart" id="emptyCart">
-                        <div class="empty-cart-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <h3 data-lang-key="emptyCartTitle">سلة التسوق فارغة</h3>
-                        <p data-lang-key="emptyCartDesc">لم تقم بإضافة أي منتجات إلى سلة التسوق بعد</p>
-                        <a href="products.html" class="btn btn-primary" data-lang-key="startShopping">
-                            <i class="fas fa-store"></i> ابدأ التسوق
-                        </a>
-                    </div>
-                </div>
-
-                <!-- قسم ملخص الطلب -->
-                <div class="order-summary-section">
-                    <div class="summary-card">
-                        <h3 class="summary-title" data-lang-key="orderSummary">ملخص الطلب</h3>
-                        
-                        <div class="summary-details">
-                            <div class="summary-row">
-                                <span data-lang-key="subtotal">المجموع الجزئي:</span>
-                                <span class="summary-value" id="subtotal">0.00 ريال</span>
-                            </div>
-                            <div class="summary-row">
-                                <span data-lang-key="shipping">الشحن:</span>
-                                <span class="summary-value" id="shipping">0.00 ريال</span>
-                            </div>
-                            <div class="summary-row">
-                                <span data-lang-key="tax">الضريبة:</span>
-                                <span class="summary-value" id="tax">0.00 ريال</span>
-                            </div>
-                            <div class="summary-row total">
-                                <span data-lang-key="total">المجموع الكلي:</span>
-                                <span class="summary-value" id="total">0.00 ريال</span>
-                            </div>
-                        </div>
-
-                        <!-- نموذج بيانات العميل -->
-                        <div class="customer-form">
-                            <h4 data-lang-key="customerInfo">معلومات العميل</h4>
-                            
-                            <div class="form-group">
-                                <label for="customerName" data-lang-key="fullName">الاسم الكامل *</label>
-                                <input type="text" id="customerName" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="customerPhone" data-lang-key="phone">رقم الهاتف *</label>
-                                <input type="tel" id="customerPhone" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="customerEmail" data-lang-key="email">البريد الإلكتروني</label>
-                                <input type="email" id="customerEmail">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="customerAddress" data-lang-key="address">العنوان *</label>
-                                <textarea id="customerAddress" rows="3" required></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="customerNotes" data-lang-key="notes">ملاحظات إضافية</label>
-                                <textarea id="customerNotes" rows="2"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="paymentMethod" data-lang-key="paymentMethod">طريقة الدفع</label>
-                                <select id="paymentMethod" class="form-select">
-                                    <option value="cash" data-lang-key="cashOnDelivery">الدفع عند الاستلام</option>
-                                    <option value="card" data-lang-key="creditCard">بطاقة ائتمان</option>
-                                    <option value="bank" data-lang-key="bankTransfer">تحويل بنكي</option>
-                                </select>
-                            </div>
-
-                            <div class="terms-agreement">
-                                <input type="checkbox" id="agreeTerms" required>
-                                <label for="agreeTerms" data-lang-key="agreeTerms">
-                                    أوافق على الشروط والأحكام وسياسة الخصوصية
-                                </label>
-                            </div>
-
-                            <button class="btn btn-primary btn-block" id="checkoutBtn" data-lang-key="completeOrder">
-                                <i class="fas fa-check-circle"></i> إتمام الطلب
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- عرض المنتجات المقترحة -->
-                    <div class="suggested-products">
-                        <h4 data-lang-key="youMayLike">قد يعجبك أيضاً</h4>
-                        <div class="suggested-grid" id="suggestedProducts">
-                            <!-- سيتم تعبئته عبر JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
     </main>
 
-    <!-- نافذة تأكيد الطلب -->
-    <div class="modal" id="orderConfirmationModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 data-lang-key="orderConfirmed">تم تأكيد الطلب!</h2>
-                <button class="modal-close" id="closeModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3 data-lang-key="thankYou">شكراً لثقتك بنا</h3>
-                <p data-lang-key="orderConfirmationText">
-                    تم استلام طلبك بنجاح برقم <strong id="orderNumber">#0001</strong><br>
-                    سنقوم بالاتصال بك خلال 24 ساعة لتأكيد التفاصيل والتسليم
-                </p>
-                <div class="order-details">
-                    <div class="detail-item">
-                        <span data-lang-key="orderTotal">المجموع:</span>
-                        <span id="modalOrderTotal">0.00 ريال</span>
-                    </div>
-                    <div class="detail-item">
-                        <span data-lang-key="deliveryTime">موعد التسليم:</span>
-                        <span id="deliveryTime">24-48 ساعة</span>
-                    </div>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn btn-primary" id="continueShopping" data-lang-key="continueShopping">
-                        مواصلة التسوق
-                    </button>
-                    <button class="btn btn-outline" id="trackOrder" data-lang-key="trackOrder">
-                        متابعة الطلب
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <footer><p data-lang-key="footer_text"></p></footer>
 
-    <!-- التذييل -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <i class="fas fa-olive-branch"></i>
-                        <div class="footer-logo-text">
-                            <h3>زيتون</h3>
-                            <p>Zaytoun Store</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h4 class="footer-title" data-lang-key="contactInfo">معلومات الاتصال</h4>
-                    <ul class="contact-info">
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+966 50 123 4567</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>info@zaytoun-store.com</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- الأصول البرمجية -->
+    <script src="js/lang.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/language.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/checkout.js"></script>
 </body>
 </html>
