@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olivey | مراجعة الطلب والدفع</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://www.google.com/search?q=https://cdn.tailwindcss.com"></script>
+<!-- خط Tajawal عربي -->
+<link href="https://www.google.com/search?q=https://fonts.googleapis.com/css2%3Ffamily%3DTajawal:wght%40400%3B700%3B800%26display%3Dswap" rel="stylesheet">
+<style>
+:root {
+--primary-color: #3d5a28; /* زيتوني داكن /
+--secondary-color: #8c8c4a; / زيتوني فاتح /
+--background-color: #f7fcf8; / خلفية فاتحة جداً */
+}
+* { font-family: 'Tajawal', sans-serif; }
+.bg-primary { background-color: var(--primary-color); }
+.text-primary { color: var(--primary-color); }
+</style>
+</head>
+<body class="bg-background-color min-h-screen">
+
+<!-- قسم الرأس (Header) -->
+<header class="bg-primary text-white shadow-lg">
+    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-wider">Olivey | تأكيد الطلب</h1>
+        <a href="index.html" class="text-sm border border-white px-3 py-1 rounded-full hover:bg-white hover:text-primary transition">العودة للمتجر</a>
+    </div>
+</header>
+
+<!-- الرسائل العامة (Alerts) -->
+<div id="messages" class="max-w-7xl mx-auto mt-6 px-4 hidden"></div>
+
+<!-- المحتوى الرئيسي للمتجر -->
+<main class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+
+    <h2 class="text-3xl font-extrabold text-primary mb-6 border-b pb-2">خطوة أخيرة: مراجعة وإرسال طلبك</h2>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- 1. تفاصيل عربة التسوق (المنتجات) -->
+        <section class="lg:col-span-1 bg-white shadow-xl rounded-xl p-6 border-t-8 border-secondary h-fit">
+            <h3 class="text-2xl font-bold text-gray-700 mb-4 pb-2 border-b">مراجعة المنتجات وتعديل الكمية</h3>
+            
+            <div id="cart-items" class="space-y-4 min-h-[100px]">
+                <p class="text-center text-gray-500 py-6 font-semibold" id="empty-cart-message">جاري تحميل العربة...</p>
+            </div>
+
+            <!-- ملخص المجموع -->
+            <div class="mt-6 pt-4 border-t border-dashed">
+                <div class="flex justify-between items-center font-bold text-xl text-primary">
+                    <span>الإجمالي الكلي:</span>
+                    <span id="cart-total">0.00 ج.م</span>
+                </div>
+            </div>
+            
+            <p class="text-sm text-gray-500 mt-4 text-center">
+                يمكنك تعديل الكمية أو إزالة الأصناف مباشرة من القائمة أعلاه.
+            </p>
+        </section>
+
+        <!-- 2. نموذج إرسال الطلب (Checkout Form) -->
+        <aside class="lg:col-span-1 bg-white shadow-xl rounded-xl p-6 border-t-8 border-primary">
+            <form id="checkout-form" class="space-y-4">
+                <h3 class="text-2xl font-bold text-primary mb-4 border-b pb-2">بيانات الشحن</h3>
+                
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">الاسم الكامل:</label>
+                    <input type="text" id="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-primary focus:ring-primary" placeholder="الاسم ثلاثي">
+                </div>
+                
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">رقم الهاتف (للتواصل):</label>
+                    <input type="tel" id="phone" required pattern="[0-9]{11}" title="يجب أن يكون رقم هاتف صحيح (11 رقم)" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-primary focus:ring-primary" placeholder="01xxxxxxxxx">
+                </div>
+
+                <div>
+                    <label for="address" class="block text-sm font-medium text-gray-700">العنوان التفصيلي:</label>
+                    <textarea id="address" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-3 border focus:border-primary focus:ring-primary" placeholder="المدينة، الشارع، رقم المبنى..."></textarea>
+                </div>
+
+                <button type="submit" id="submit-order-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition transform hover:scale-[1.01] shadow-md disabled:bg-gray-400">
+                    تأكيد وإرسال الطلب الآن (الدفع عند الاستلام)
+                </button>
+                <p class="text-xs text-center text-gray-500 mt-2">نحن نقدر ثقتكم. سيتم التواصل معكم لتأكيد تفاصيل الطلب.</p>
+            </form>
+        </aside>
+    </div>
+    
+</main>
+
+<!-- Firebase SDKs and Logic -->
+<script type="module">
+    // استيراد مكتبات Firebase المطلوبة
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js"; 
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+    
+    // *************** Firebase Configuration (استخدم نفس الإعدادات الخاصة بك) ***************
+    const firebaseConfig = {
+      apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM", 
+      authDomain: "zaytonaty-f4240.firebaseapp.com",
+      projectId: "zaytonaty-f4240",
+      storageBucket: "zaytonaty-f4240.firebasestorage.app",
+      messagingSenderId: "268778198002",
+      appId: "1:268778198002:web:2803824e75be502f73916b",
+      measurementId: "G-Y47CN3QHJ1"
+    };
+    // *******************************************************
+
+    let app, db, auth;
+    let isAuthenticated = false;
+    let cartItems = []; 
+
+
+    // العناصر من DOM
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartTotalEl = document.getElementById('cart-total');
+    const checkoutFormEl = document.getElementById('checkout-form');
+    const submitOrderBtn = document.getElementById('submit-order-btn');
+    const messagesEl = document.getElementById('messages');
+    const emptyCartMessageEl = document.getElementById('empty-cart-message');
+    
+    // *************** وظائف عرض الرسائل ***************
+    function showMessage(text, isError = false) {
+        messagesEl.textContent = text;
+        messagesEl.className = `max-w-4xl mx-auto p-3 rounded-lg text-center font-semibold mb-4 ${isError ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800'}`;
+        messagesEl.style.display = 'block';
+        setTimeout(() => {
+            messagesEl.style.display = 'none';
+        }, 7000); 
+    }
+
+    // *************** وظائف العربة المحلية ***************
+
+    // حفظ العربة في الذاكرة المحلية
+    function saveCartToStorage() {
+        localStorage.setItem('oliveyCart', JSON.stringify(cartItems));
+    }
+
+    // 1. تحميل العربة من الذاكرة المحلية
+    function loadCartFromStorage() {
+        const storedCart = localStorage.getItem('oliveyCart');
+        if (storedCart) {
+            try {
+                cartItems = JSON.parse(storedCart);
+            } catch (e) {
+                console.error("Failed to parse cart from storage", e);
+                cartItems = [];
+            }
+        }
+    }
+    
+    // 2. تحديث الكمية في العربة
+    window.updateQuantity = function(itemId, delta) {
+        const itemIndex = cartItems.findIndex(item => item.id === itemId);
+        if (itemIndex > -1) {
+            cartItems[itemIndex].quantity += delta;
+            if (cartItems[itemIndex].quantity <= 0) {
+                removeItem(itemId);
+            } else {
+                saveCartToStorage(); 
+                renderCartDetails();
+            }
+        }
+    }
+    
+    // 3. إزالة صنف من العربة
+    window.removeItem = function(itemId) {
+        cartItems = cartItems.filter(item => item.id !== itemId);
+        saveCartToStorage(); 
+        renderCartDetails();
+        showMessage('تم إزالة الصنف من العربة.', false);
+    }
+
+    // 4. عرض تفاصيل العربة (مع أدوات التحكم)
+    function renderCartDetails() {
+        cartItemsEl.innerHTML = '';
+        emptyCartMessageEl.style.display = 'none';
+        let total = 0;
+
+        if (!cartItems || cartItems.length === 0) {
+            emptyCartMessageEl.textContent = "عربة التسوق فارغة حالياً. يرجى العودة للمتجر وإضافة منتجات.";
+            emptyCartMessageEl.style.display = 'block';
+            // تأكد من أن زر الإرسال معطل إذا كانت العربة فارغة
+            if (submitOrderBtn) submitOrderBtn.disabled = true;
+            cartTotalEl.textContent = `0.00 ج.م`;
+            return;
+        }
+
+        cartItems.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+
+            const itemEl = document.createElement('div');
+            itemEl.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-lg shadow-sm';
+            itemEl.innerHTML = `
+                <div class="text-sm font-semibold text-gray-700 max-w-[50%]">
+                    ${item.name}
+                </div>
+                <div class="flex items-center space-x-2 space-x-reverse text-right">
+                    <span class="text-lg font-bold text-red-600 ml-3">${itemTotal.toFixed(2)} ج.م</span>
+                    
+                    <!-- أزرار التحكم في الكمية -->
+                    <button onclick="updateQuantity(${item.id}, -1)" class="text-primary hover:text-green-800 p-1 rounded-full text-lg font-extrabold" aria-label="Decrease quantity">-</button>
+                    <span class="text-md font-bold w-4 text-center">${item.quantity}</span>
+                    <button onclick="updateQuantity(${item.id}, 1)" class="text-primary hover:text-green-800 p-1 rounded-full text-lg font-extrabold" aria-label="Increase quantity">+</button>
+                    <button onclick="removeItem(${item.id})" class="text-red-500 hover:text-red-700 p-1 rounded-full" aria-label="Remove item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 6h6v10H7V6z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            `;
+            cartItemsEl.appendChild(itemEl);
+        });
+
+        cartTotalEl.textContent = `${total.toFixed(2)} ج.م`;
+        if (submitOrderBtn) submitOrderBtn.disabled = false;
+    }
+
+    // 5. دالة التنظيف بعد نجاح الإرسال (لضمان الاستقرار)
+    function clearCartAndUI() {
+        try {
+            // 1. تفريغ العربة المحلية
+            localStorage.removeItem('oliveyCart');
+            cartItems = []; 
+            
+            // 2. تحديث الواجهة لإظهار العربة فارغة وتعطيل زر الإرسال
+            renderCartDetails(); 
+            
+            // 3. تفريغ نموذج الشحن
+            checkoutFormEl.reset(); 
+        } catch (cleanupError) {
+            console.error("Error during cart cleanup:", cleanupError);
+            // لا نعرض رسالة خطأ للمستخدم هنا، لأن الطلب تم إرساله بالفعل.
+        }
+    }
+    
+    // 6. إرسال الطلب إلى Firestore
+    async function submitOrder(e) {
+        e.preventDefault();
+
+        if (!cartItems || cartItems.length === 0) {
+            showMessage("عربة التسوق فارغة! لا يمكن إرسال طلب.", true);
+            return;
+        }
+        if (!isAuthenticated) {
+            showMessage("فشل الاتصال بالخادم (المصادقة). يرجى تحديث الصفحة والمحاولة مجدداً.", true);
+            return;
+        }
+
+        // تجميع البيانات
+        const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        const finalOrder = {
+            buyer: {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value
+            },
+            items: cartItems.map(item => ({
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity
+            })),
+            total: parseFloat(totalAmount.toFixed(2)),
+            status: 'جديد', 
+            date: new Date().toLocaleString('ar-EG', { 
+                timeZone: 'Africa/Cairo',
+                year: 'numeric', month: 'numeric', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            }),
+            timestamp: serverTimestamp()
+        };
+
+        submitOrderBtn.disabled = true;
+        submitOrderBtn.textContent = '...جاري إرسال الطلب';
+        
+        try {
+            // 1. الإرسال إلى Firebase
+            const docRef = await addDoc(collection(db, "orders"), finalOrder);
+            
+            // 2. التنظيف وتحديث الواجهة (تم عزلها في دالة منفصلة)
+            clearCartAndUI();
+
+            // 3. عرض رسالة النجاح
+            showMessage(`✅ تم استلام طلبك بنجاح! رقم الطلب: ${docRef.id.substring(0, 8)}... سيتم التواصل معك قريباً.`, false);
+
+        } catch (error) {
+            // إذا حدث خطأ في Firestore (فشل الإرسال فعلاً)
+            console.error("Error submitting order: ", error);
+            showMessage(`❌ فشل إرسال الطلب. يرجى المحاولة لاحقاً. ${error.message}`, true);
+        } finally {
+            submitOrderBtn.disabled = false;
+            submitOrderBtn.textContent = 'تأكيد وإرسال الطلب الآن (الدفع عند الاستلام)';
+        }
+    }
+
+
+    // *************** التهيئة والبدء ***************
+
+    async function initCheckout() {
+        // 1. تحميل العربة
+        loadCartFromStorage();
+        
+        // 2. عرض تفاصيل العربة (لتحديد حالة الزر)
+        renderCartDetails();
+
+        try {
+            // 3. تهيئة Firebase والمصادقة المجهولة
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            await signInAnonymously(auth);
+            isAuthenticated = true;
+            
+            // 4. ربط نموذج الدفع بالدالة
+            checkoutFormEl.addEventListener('submit', submitOrder);
+
+        } catch (error) {
+            console.error("Initialization Error:", error);
+            showMessage("فشل الاتصال بخدمة المتجر. يرجى التحقق من إعدادات Firebase.", true);
+        }
+    }
+
+    window.onload = initCheckout;
+</script>
+
+
+</body>
+</html>
