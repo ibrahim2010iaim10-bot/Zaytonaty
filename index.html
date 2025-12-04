@@ -1,216 +1,120 @@
 <!DOCTYPE html>
-
-<html lang="ar" dir="rtl"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Olivey | متجر الزيتون والمنتجات الطبيعية</title> <!-- Tailwind CSS CDN --> <script src="https://www.google.com/search?q=https://cdn.tailwindcss.com"></script> <!-- خط Tajawal عربي --> <link href="https://www.google.com/search?q=https://fonts.googleapis.com/css2%3Ffamily%3DTajawal:wght%40400%3B700%3B800%26display%3Dswap" rel="stylesheet"> <style> :root { --primary-color: #3d5a28; /* زيتوني داكن / --secondary-color: #8c8c4a; / زيتوني فاتح / --background-color: #f7fcf8; / خلفية فاتحة جداً */ --dark-contrast: #1c2b14; } * { font-family: 'Tajawal', sans-serif; } .bg-primary { background-color: var(--primary-color); } .text-primary { color: var(--primary-color); }
-
-    /* ترويسة البطل (Hero Section) مع خلفية زيتونية جميلة */
-    .hero-background {
-        /*Placeholder Image for Olive Grove*/
-        background-image: url('https://placehold.co/1200x400/3d5a28/ffffff?text=Olivey+Natural+Products');
-        background-size: cover;
-        background-position: center;
-        height: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-    .hero-background::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.4); /* طبقة داكنة للقراءة */
-    }
-</style>
-</head> <body class="bg-background-color min-h-screen">
-
-<!-- قسم الرأس الثابت (Fixed Header) -->
-<header class="bg-primary text-white shadow-lg sticky top-0 z-20">
-    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-        <h1 class="text-3xl font-extrabold tracking-wider">Olivey</h1>
-        
-        <!-- زر عربة التسوق (الرابط الصحيح الآن) -->
-        <!-- الرابط الذي تم تصحيحه: cart_checkout.html -->
-        <a href="cart_checkout.html" id="cart-button" class="relative bg-secondary hover:bg-yellow-700 p-3 rounded-full transition transform hover:scale-105 shadow-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <span id="cart-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">0</span>
-        </a>
-    </div>
-</header>
-
-<!-- قسم الترويسة الجذاب (Hero Section) -->
-<div class="hero-background shadow-inner">
-    <div class="relative z-10 text-center p-6 bg-black bg-opacity-30 rounded-xl">
-        <h2 class="text-5xl font-extrabold text-white mb-3">جمال الطبيعة في كل قطرة</h2>
-        <p class="text-xl text-gray-200">اكتشفوا أجود أنواع الزيتون والمنتجات العضوية من مزارعنا مباشرة.</p>
-        <a href="#product-list-start" class="mt-6 inline-block bg-secondary hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105 shadow-lg">
-            تسوق الآن
-        </a>
-    </div>
-</div>
-
-
-<!-- الرسائل العامة (Alerts) -->
-<div id="messages" class="max-w-7xl mx-auto mt-6 px-4 hidden"></div>
-
-<!-- المحتوى الرئيسي للمتجر -->
-<main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-
-    <h2 id="product-list-start" class="text-4xl font-extrabold text-primary mb-8 text-center pt-4 border-b-2 border-primary inline-block mx-auto">منتجاتنا الطبيعية</h2>
-    
-    <!-- شبكة عرض المنتجات -->
-    <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-        <!-- سيتم إضافة المنتجات هنا بواسطة JavaScript -->
-    </div>
-
-</main>
-
-<!-- Firebase SDKs and Logic -->
-<script type="module">
-    // استيراد مكتبات Firebase المطلوبة
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js"; 
-    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
-    
-    // *************** Firebase Configuration (استخدم نفس الإعدادات الخاصة بك) ***************
-    const firebaseConfig = {
-      apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM", 
-      authDomain: "zaytonaty-f4240.firebaseapp.com",
-      projectId: "zaytonaty-f4240",
-      storageBucket: "zaytonaty-f4240.firebasestorage.app",
-      messagingSenderId: "268778198002",
-      appId: "1:268778198002:web:2803824e75be502f73916b",
-      measurementId: "G-Y47CN3QHJ1"
-    };
-    // *******************************************************
-
-    let app, db, auth;
-    
-    // العناصر من DOM
-    const productListEl = document.getElementById('product-list');
-    const cartCountEl = document.getElementById('cart-count');
-    const messagesEl = document.getElementById('messages');
-    
-    // قائمة المنتجات (Hardcoded for simplicity)
-    // يجب أن تتطابق هذه البيانات مع ما هو متوقع في سلة المشتريات
-    const products = [
-        { id: 1, name: "زيت زيتون بكر ممتاز (لتر)", price: 250.00, description: "عصرة أولى على البارد، خيارك الأفضل للطهي والصحة.", imageUrl: "https://placehold.co/400x300/3d5a28/ffffff?text=Olive+Oil" },
-        { id: 2, name: "زيتون كلاماتا أسود (كيلو)", price: 85.00, description: "طعم غني ومرارة متوازنة، مثالي للسلطات والمقبلات.", imageUrl: "https://placehold.co/400x300/8c8c4a/ffffff?text=Black+Olives" },
-        { id: 3, name: "مربى التين الطبيعي (400 جرام)", price: 60.00, description: "مصنوعة من التين الطازج، بدون مواد حافظة.", imageUrl: "https://placehold.co/400x300/3d5a28/ffffff?text=Fig+Jam" },
-        { id: 4, name: "صابون زيت الزيتون (قطعة)", price: 35.00, description: "صابون طبيعي 100%، مغذي للبشرة الحساسة.", imageUrl: "https://placehold.co/400x300/8c8c4a/ffffff?text=Olive+Soap" },
-    ];
-
-
-    // *************** وظائف عرض الرسائل ***************
-    function showMessage(text, isError = false) {
-        messagesEl.textContent = text;
-        messagesEl.className = `max-w-7xl mx-auto p-3 rounded-lg text-center font-semibold mb-4 ${isError ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800'}`;
-        messagesEl.style.display = 'block';
-        setTimeout(() => {
-            messagesEl.style.display = 'none';
-        }, 5000); 
-    }
-
-    // *************** وظائف العربة المحلية ***************
-    
-    // 1. تحميل العربة من الذاكرة المحلية
-    function loadCart() {
-        const storedCart = localStorage.getItem('oliveyCart');
-        return storedCart ? JSON.parse(storedCart) : [];
-    }
-
-    // 2. حفظ العربة في الذاكرة المحلية
-    function saveCart(cart) {
-        localStorage.setItem('oliveyCart', JSON.stringify(cart));
-        updateCartCount(cart);
-    }
-
-    // 3. تحديث عداد السلة في الواجهة
-    function updateCartCount(cart) {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCountEl.textContent = totalItems;
-    }
-
-    // 4. إضافة منتج للعربة
-    window.addToCart = function(productId) {
-        const product = products.find(p => p.id === productId);
-        if (!product) {
-            showMessage("خطأ: المنتج غير موجود.", true);
-            return;
-        }
-
-        let cart = loadCart();
-        const existingItemIndex = cart.findIndex(item => item.id === productId);
-
-        if (existingItemIndex > -1) {
-            cart[existingItemIndex].quantity += 1;
-        } else {
-            // إضافة البيانات الضرورية فقط للمنتج في العربة
-            cart.push({
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                quantity: 1 
-            });
-        }
-
-        saveCart(cart);
-        showMessage(`✅ تم إضافة ${product.name} إلى السلة!`, false);
-    }
-
-    // *************** عرض المنتجات ***************
-    
-    function renderProducts() {
-        productListEl.innerHTML = '';
-        products.forEach(product => {
-            const productEl = document.createElement('div');
-            productEl.className = 'bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition duration-300 transform hover:scale-[1.02] border border-gray-100';
-            productEl.innerHTML = `
-                <div class="h-48 overflow-hidden">
-                    <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-full object-cover">
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر زيت الزيتون | الرئيسية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body dir="rtl">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-olive-branch"></i>
+                    <h1 id="site-title">متجر زيت الزيتون</h1>
                 </div>
-                <div class="p-5 text-center">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">${product.name}</h3>
-                    <p class="text-gray-500 text-sm mb-4">${product.description}</p>
-                    <p class="text-2xl font-extrabold text-red-600 mb-4">${product.price.toFixed(2)} ج.م</p>
-                    
-                    <button onclick="addToCart(${product.id})" class="w-full bg-primary hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition transform hover:scale-[1.01] shadow-md">
-                        أضف إلى السلة
-                    </button>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="active" id="nav-home">الرئيسية</a></li>
+                        <li><a href="products.html" id="nav-products">المنتجات</a></li>
+                        <li><a href="cart.html" id="nav-cart">سلة التسوق</a></li>
+                        <li><a href="admin.html" id="nav-admin">لوحة المسؤول</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="ar">عربي</button>
+                    <button class="lang-btn" data-lang="en">English</button>
                 </div>
-            `;
-            productListEl.appendChild(productEl);
-        });
-    }
-    
-    // *************** التهيئة والبدء ***************
-    
-    async function initStore() {
-        try {
-            // 1. تهيئة Firebase (للتأكد من أننا جاهزون إذا احتجنا إليها لاحقًا)
-            app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            
-            await signInAnonymously(auth);
+                
+                <div class="cart-icon" id="cart-icon">
+                    <a href="cart.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
 
-            // 2. عرض المنتجات
-            renderProducts();
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2 id="hero-title">زيت زيتون بكر ممتاز عالي الجودة</h2>
+            <p id="hero-description">استمتع بأفضل أنواع زيت الزيتون الطبيعي المستخرج بعناية من أجود أنواع الزيتون. منتجاتنا عضوية 100% وخالية من أي إضافات كيميائية.</p>
+            <a href="products.html" class="btn" id="hero-button">تصفح المنتجات</a>
+        </div>
+    </section>
 
-            // 3. تحديث حالة العربة الحالية
-            const currentCart = loadCart();
-            updateCartCount(currentCart);
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title" id="features-title">لماذا تختار متجرنا؟</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3 id="feature1-title">منتجات عضوية</h3>
+                    <p id="feature1-desc">جميع منتجاتنا عضوية 100% وخالية من المواد الكيميائية</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3 id="feature2-title">توصيل سريع</h3>
+                    <p id="feature2-desc">نقوم بالتوصيل خلال 24-48 ساعة لجميع أنحاء المدينة</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-award"></i>
+                    <h3 id="feature3-title">جودة عالية</h3>
+                    <p id="feature3-desc">نضمن لكم أعلى معايير الجودة في جميع منتجاتنا</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-headset"></i>
+                    <h3 id="feature4-title">دعم فني</h3>
+                    <p id="feature4-desc">فريق دعم فني متاح على مدار الساعة لخدمتكم</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        } catch (error) {
-            console.error("Initialization Error:", error);
-            showMessage("فشل الاتصال بخدمة المتجر. يرجى التحقق من إعدادات Firebase.", true);
-        }
-    }
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title" id="featured-products-title">منتجات مميزة</h2>
+            <div class="products-grid" id="featured-products-container">
+                <!-- Featured products will be loaded by JavaScript -->
+            </div>
+            <div class="text-center">
+                <a href="products.html" class="btn" id="view-all-products">عرض جميع المنتجات</a>
+            </div>
+        </div>
+    </section>
 
-    window.onload = initStore;
-</script>
-</body> </html>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-olive-branch"></i>
+                    <span id="footer-title">متجر زيت الزيتون</span>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html" id="footer-home">الرئيسية</a>
+                    <a href="products.html" id="footer-products">المنتجات</a>
+                    <a href="cart.html" id="footer-cart">سلة التسوق</a>
+                    <a href="admin.html" id="footer-admin">لوحة المسؤول</a>
+                </div>
+                <p id="footer-description">نقدم لكم أجود أنواع زيت الزيتون الطبيعي من أفضل المزارع</p>
+                <p class="copyright" id="copyright">© 2023 متجر زيت الزيتون. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/language.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
