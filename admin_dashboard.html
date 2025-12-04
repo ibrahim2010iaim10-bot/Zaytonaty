@@ -3,126 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olivey - لمنتجات الزيتون الأصيلة</title>
+    <title>لوحة تحكم المسؤول - إدارة الطلبات</title>
+    <!-- Tailwind CSS for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary-color: #3d5a28; --secondary-color: #8ea604; --accent-color: #f4a261; --light-bg: #f9fdf5; --text-color: #333; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background-color: var(--light-bg); color: var(--text-color); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-        a { text-decoration: none; color: inherit; }
-        header { background-color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
-        .nav-links { list-style: none; display: flex; gap: 20px; }
-        .nav-links a { font-weight: 500; transition: color 0.3s; padding: 5px 10px; border-radius: 5px; }
-        .nav-links a:hover { color: white; background-color: var(--secondary-color); }
-        .contact-info { font-size: 0.9rem; color: var(--primary-color); font-weight: bold; }
-
-        /* Hero Section Styling */
-        .hero { background: url('https://placehold.co/1200x500/3d5a28/ffffff?text=Olivey+Farms') no-repeat center center/cover; color: white; padding: 80px 5%; text-align: center; margin-bottom: 40px; }
-        .hero-content { max-width: 800px; margin: 0 auto; background-color: rgba(0, 0, 0, 0.4); padding: 30px; border-radius: 10px; }
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; font-weight: bold; }
-        .hero p { font-size: 1.2rem; margin-bottom: 30px; }
-        .shop-btn { background-color: var(--accent-color); color: var(--primary-color); padding: 12px 30px; border-radius: 50px; font-size: 1.1rem; font-weight: bold; transition: background-color 0.3s; }
-        .shop-btn:hover { background-color: #e69557; }
-
-        /* Features Section */
-        .features-section { display: flex; justify-content: space-around; gap: 20px; max-width: 1200px; margin: 0 auto 40px; padding: 0 5%; flex-wrap: wrap; }
-        .feature-item { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; flex: 1; min-width: 250px; transition: transform 0.3s; }
-        .feature-item:hover { transform: translateY(-5px); }
-        .feature-item h3 { color: var(--secondary-color); margin-bottom: 10px; }
-        .feature-item p { color: #666; font-size: 0.95rem; }
-
-        /* About & Call to Action Section */
-        .content-section { max-width: 1200px; margin: 0 auto 40px; padding: 20px 5%; display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }
-        .content-text { flex: 1; min-width: 300px; }
-        .content-image { flex: 1; min-width: 300px; text-align: center; }
-        .content-image img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .content-text h2 { color: var(--primary-color); margin-bottom: 15px; font-size: 2rem; border-right: 3px solid var(--accent-color); padding-right: 10px; }
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .navbar { flex-direction: column; gap: 10px; }
-            .content-section { flex-direction: column; }
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .features-section { justify-content: center; }
+        /* تعريف الألوان والثيم الرئيسي */
+        :root { 
+            --primary-color: #3d5a28; /* لون الزيتون الداكن */
+            --secondary-color: #8ea604; /* لون الزيتون الفاتح */
+            --text-color: #1a1a1a;
+            --status-new: #fcd34d;      /* أصفر - جديد */
+            --status-in-progress: #60a5fa; /* أزرق - قيد التنفيذ */
+            --status-completed: #34d399; /* أخضر - مكتمل */
         }
-
-        /* Footer */
-        footer { background-color: var(--primary-color); color: white; text-align: center; padding: 1.5rem; margin-top: auto; }
+        * { font-family: 'Tajawal', sans-serif; }
+        .header-bg { background-color: var(--primary-color); }
+        .status-badge { 
+            padding: 4px 10px; 
+            border-radius: 9999px; 
+            font-weight: bold; 
+            font-size: 0.75rem; 
+            color: #1a1a1a; 
+            display: inline-block;
+        }
+        .new { background-color: var(--status-new); }
+        .in-progress { background-color: var(--status-in-progress); }
+        .completed { background-color: var(--status-completed); }
+        .action-btn { transition: background-color 0.2s, transform 0.1s; }
+        .action-btn:hover { transform: translateY(-1px); }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex flex-col">
 
-    <header>
-        <nav class="navbar">
-            <div class="logo">Olivey 🌿</div>
-            <ul class="nav-links">
-                <li><a href="index.html">الرئيسية</a></li>
-                <li><a href="products.html">المنتجات</a></li>
-                <li><a href="cart.html">سلة الشراء</a></li>
-                <li><a href="login.html">دخول المسؤول</a></li>
-            </ul>
-            <div class="contact-info">
-                اتصل بنا: 201018563500+ 📞
-            </div>
-        </nav>
+    <!-- Header Section -->
+    <header class="header-bg text-white shadow-lg">
+        <div class="max-w-7xl mx-auto py-4 px-4 flex justify-between items-center">
+            <h1 class="text-3xl font-bold">لوحة تحكم المسؤول 🛠️</h1>
+            <a href="index.html" class="text-sm border border-white px-3 py-1 rounded-full hover:bg-white hover:text-green-800 transition">
+                العودة للمتجر
+            </a>
+        </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>جودة زيتون لا تُنسى</h1>
-                <p>مرحباً بك في Olivey، حيث نجمع لك أجود محاصيل الزيتون وزيوتها الطبيعية. اكتشف طعم الأصالة والجودة.</p>
-                <a href="products.html" class="shop-btn">اكتشف منتجاتنا</a>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features-section">
-            <div class="feature-item">
-                <h3>حصاد طازج</h3>
-                <p>نحرص على قطف الزيتون يدوياً في موسمه لضمان أعلى مستويات الجودة والمذاق.</p>
-            </div>
-            <div class="feature-item">
-                <h3>زيت بكر ممتاز</h3>
-                <p>زيوتنا معصورة على البارد، خالية من الإضافات، لتحصل على أقصى فائدة صحية.</p>
-            </div>
-            <div class="feature-item">
-                <h3>توصيل سريع</h3>
-                <p>نوصل طلباتك بأسرع وقت ممكن وبأفضل طرق التغليف للحفاظ على المنتج.</p>
-            </div>
-        </section>
-
-        <!-- About Us Section -->
-        <section class="content-section">
-            <div class="content-text">
-                <h2>قصتنا مع الزيتون</h2>
-                <p>بدأت Olivey كحلم بتحويل شغفنا بالزيتون إلى علامة تجارية تقدم منتجات طبيعية 100% لعملائنا. نحن نؤمن بأن الغذاء الصحي يبدأ من الأرض الطيبة، ولذا نراقب كل خطوة من الزراعة حتى التعبئة. نضمن أن كل قطرة زيت وكل حبة زيتون تصل إليك هي نتاج عمل مخلص ومعايير جودة صارمة.</p>
-            </div>
-            <div class="content-image">
-                <img src="https://placehold.co/400x300/8ea604/ffffff?text=Olive+Harvest" alt="صورة لحصاد الزيتون">
-            </div>
-        </section>
+    <!-- Main Content: Orders List -->
+    <main class="flex-grow max-w-7xl mx-auto w-full p-6">
+        <h2 class="text-2xl font-bold mb-6 text-gray-700 border-b pb-2">قائمة طلبات الشراء</h2>
         
-        <!-- Quality Guarantee Section -->
-         <section class="content-section" style="flex-direction: row-reverse;">
-            <div class="content-text">
-                <h2>ضمان الجودة</h2>
-                <p>نحن فخورون بتقديم شهادة الجودة لجميع منتجاتنا. يتم اختبار زيوت الزيتون لدينا بانتظام لضمان الحموضة المنخفضة والمطابقة لمعايير الزيت البكر الممتاز. رضاك هو أولويتنا القصوى.</p>
-            </div>
-            <div class="content-image">
-                <img src="https://placehold.co/400x300/3d5a28/ffffff?text=Quality+Assurance" alt="ضمان الجودة">
-            </div>
-        </section>
+        <!-- Messages Section (for success/error alerts) -->
+        <div id="messages" class="mb-4 hidden p-3 rounded-lg text-center font-semibold"></div>
 
+        <!-- Orders Table Container -->
+        <div id="orders-container" class="bg-white shadow-2xl rounded-xl overflow-x-auto">
+            <p id="loading-message" class="p-8 text-center text-gray-500">...جاري تحميل الطلبات</p>
+            <p id="empty-message" class="hidden p-8 text-center text-gray-500 font-bold">لا توجد طلبات جديدة حالياً.</p>
+            
+            <table class="min-w-full divide-y divide-gray-200 hidden" id="orders-table">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">رقم الطلب</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">التاريخ والوقت</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">العميل والمجموع</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">تفاصيل الطلبية</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الحالة الحالية</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="orders-table-body">
+                    <!-- Orders will be injected here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
     </main>
 
-    <footer>
-        <p>جميع الحقوق محفوظة &copy; 2023 Olivey</p>
+    <!-- Footer Section -->
+    <footer class="header-bg text-white text-center py-3 mt-8">
+        <p>لوحة تحكم Olivey لإدارة الطلبات</p>
     </footer>
 
-</body>
-</html>
+    <!-- Firebase SDKs and Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, query, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+        
+        // *************** Firebase Configuration ***************
+        // NOTE: These are mocked configurations.
+        const firebaseConfig = {
+          apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM", 
+          authDomain: "zaytonaty-f4240.firebaseapp.com",
+          projectId: "zaytonaty-f4240",
+          storageBucket: "zaytonaty-f4240.firebasestorage.app",
+          messagingSenderId: "268778198002",
+          appId: "1:268778198002:web:2803824e75be502f73916b",
+          measurementId: "G-Y47CN3QHJ1"
+        };
+        // *******************************************************
+
+        const STATUSES = {
+            'جديد': { class: 'new', label: 'جديد' },
+            'قيد التنفيذ': { class: 'in-progress', label: 'قيد التنفيذ' },
+            'مكتمل': { class: 'completed', label: 'مكتمل' }
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        // نستخدم 'orders' كاسم لمجموعة الطلبات
+        const ordersCollection = collection(db, "orders");
+        
+        // *************** وظيفة عرض الرسائل (بديل عن alert) ***************
+        function showMessage(text, isError = false) {
+            const msgEl = document.getElementById('messages');
+            msgEl.textContent = text;
+            msgEl.className = 'mb-4 p-3 rounded-lg text-center font-semibold';
+            msgEl.style.display = 'block';
+            if (isError) {
+                msgEl.classList.add('bg-red-200', 'text-red-800');
+            } else {
+                msgEl.classList.add('bg-green-200', 'text-green-800');
+            }
+            // إخفاء الرسالة بعد 3 ثواني
+            setTimeout(() => {
+                msgEl.style.display = 'none';
+            }, 3000);
+        }
+
+        // *************** وظائف إدارة الطلبات ***************
+
+        // يتم تشغيل هذه الدالة بعد المصادقة لتبدأ الاستماع للبيانات في الوقت الفعلي
+        function setupRealtimeListener() {
+            const tableBody = document.getElementById('orders-table-body');
+            const ordersTable = document.getElementById('orders-table');
+            const loadingMessage = document.getElementById('loading-message');
+            const emptyMessage = document.getElementById('empty-message');
+            
+            // onSnapshot للاستماع للتغييرات في الوقت الفعلي
+            onSnapshot(query(ordersCollection), (snapshot) => {
+                loadingMessage.style.display = 'none';
+                tableBody.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    ordersTable.classList.add('hidden');
+                    emptyMessage.style.display = 'block';
+                    return;
+                }
+                
+                ordersTable.classList.remove('hidden');
+                emptyMessage.style.display = 'none';
+
+                snapshot.forEach(orderDoc => {
+                    const order = orderDoc.data();
+                    const orderId = orderDoc.id;
+                    // تحديد حالة الطلب الافتراضية إذا لم تكن موجودة
+                    const statusData = STATUSES[order.status] || STATUSES['جديد'];
+
+                    // تجميع تفاصيل المنتجات في قائمة HTML
+                    const itemsList = order.items.map(item => 
+                        `<li>${item.name} (×${item.quantity}) - ${item.price.toFixed(2)} ج.م</li>`
+                    ).join('');
+
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${orderId.substring(0, 8)}...</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${order.date}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <span class="font-bold">${order.buyer.name}</span><br>
+                            <span class="text-xs text-gray-600">${order.buyer.phone}</span>
+                            <div class="mt-1 font-bold text-gray-800">${order.total.toFixed(2)} ج.م</div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500 max-w-xs">
+                            <ul class="list-disc list-inside text-xs">${itemsList}</ul>
+                            <div class="mt-2 text-xs text-gray-600 font-bold border-t pt-1">العنوان: ${order.buyer.address}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="status-badge ${statusData.class}" id="status-${orderId}">${statusData.label}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <select id="status-select-${orderId}" class="p-2 border rounded-md text-sm mb-2 w-full">
+                                <option value="جديد" ${order.status === 'جديد' ? 'selected' : ''}>جديد</option>
+                                <option value="قيد التنفيذ" ${order.status === 'قيد التنفيذ' ? 'selected' : ''}>قيد التنفيذ</option>
+                                <option value="مكتمل" ${order.status === 'مكتمل' ? 'selected' : ''}>مكتمل</option>
+                            </select>
+                            <button onclick="updateOrderStatus('${orderId}')" class="action-btn bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md text-xs font-semibold w-full">تحديث الحالة</
