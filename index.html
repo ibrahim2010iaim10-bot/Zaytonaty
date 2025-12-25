@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <title>Zaytonaty - الرئيسية</title>
@@ -7,21 +7,30 @@
 </head>
 <body>
     <header>
-        <div class="logo">Zaytonaty 🌿</div>
+        <a href="index.html" class="logo">Zaytonaty 🌿</a>
         <nav>
             <a href="index.html">الرئيسية</a>
             <a href="products.html">المنتجات</a>
-            <a href="cart.html">السلة</a>
+            <a href="cart.html">السلة <span id="cart-count">0</span></a>
             <a href="admin.html">الإدارة</a>
         </nav>
     </header>
 
     <section class="hero">
-        <div>
-            <h1>زيت زيتون بكر طبيعي 100%</h1>
-            <p>من المزرعة إلى بيتك مباشرة بكل حب وصحة.</p>
-            <a href="products.html" class="btn">اطلب الآن</a>
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1>أهلاً بك في زيتوناتي</h1>
+            <p>أجود أنواع زيت الزيتون البكر من مزارعنا إليك.</p>
+            <a href="products.html" class="cta-btn">تسوق الآن</a>
         </div>
     </section>
+
+    <script>
+        function updateCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+        updateCount();
+    </script>
 </body>
 </html>
