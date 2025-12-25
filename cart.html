@@ -1,52 +1,76 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang-key="page_title_cart"></title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>سلة المشتريات</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="index.html" data-lang-key="nav_home"></a>
-            <a href="products.html" data-lang-key="nav_products"></a>
-            <a href="cart.html" data-lang-key="nav_cart"></a>
-            <a href="admin.html" data-lang-key="nav_admin"></a>
-        </nav>
-        <button id="lang-toggle"></button>
-    </header>
+    <header><div class="logo">Zaytonaty 🛒</div></header>
 
-    <main>
-        <section class="page-header section-padding">
-            <h1 data-lang-key="cart_header"></h1>
-        </section>
+    <div style="padding: 40px 5%;">
+        <h2>منتجاتك المختارة</h2>
+        <div id="cart-items"></div>
+        <h3>الإجمالي: <span id="total-price">0</span> ج.م</h3>
 
-        <section class="cart-details section-padding">
-            <table id="cart-table">
-                <thead>
-                    <tr>
-                        <th data-lang-key="cart_item"></th>
-                        <th data-lang-key="cart_price"></th>
-                        <th data-lang-key="cart_quantity"></th>
-                        <th data-lang-key="cart_subtotal"></th>
-                    </tr>
-                </thead>
-                <tbody id="cart-body">
-                    </tbody>
-            </table>
+        <div style="max-width: 400px; margin-top: 30px; background: white; padding: 20px; border-radius: 10px;">
+            <h3>بيانات الشحن</h3>
+            <input type="text" id="name" placeholder="اسمك بالكامل">
+            <input type="tel" id="phone" placeholder="رقم الموبايل">
+            <input type="text" id="address" placeholder="العنوان بالتفصيل">
+            <button class="btn" style="width: 100%" onclick="sendOrder()">تأكيد الطلب 🚀</button>
+        </div>
+    </div>
 
-            <div class="checkout-summary">
-                <h3 data-lang-key="summary_title"></h3>
-                <p><span data-lang-key="summary_total"></span>: <span id="cart-total">0</span></p>
-                <button id="checkout-button" data-lang-key="checkout_btn"></button>
-            </div>
-        </section>
-    </main>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-    <footer><p data-lang-key="footer_text"></p></footer>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM",
+            authDomain: "zaytonaty-f4240.firebaseapp.com",
+            projectId: "zaytonaty-f4240",
+            storageBucket: "zaytonaty-f4240.firebasestorage.app",
+            messagingSenderId: "268778198002",
+            appId: "1:268778198002:web:2803824e75be502f73916b"
+        };
 
-    <script src="js/lang.js"></script>
-    <script src="js/main.js"></script>
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const container = document.getElementById('cart-items');
+            let total = 0;
+            container.innerHTML = cart.map(item => {
+                total += item.price;
+                return `<p>${item.name} - ${item.price} ج.م</p>`;
+            }).join('');
+            document.getElementById('total-price').innerText = total;
+        }
+
+        window.sendOrder = async () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const customer = {
+                customer_name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                items: cart,
+                total: document.getElementById('total-price').innerText,
+                date: new Date().toLocaleString('ar-EG')
+            };
+
+            if(cart.length === 0 || !customer.phone) return alert("تأكد من المنتجات والبيانات!");
+
+            try {
+                await addDoc(collection(db, "orders"), customer);
+                alert("تم استلام طلبك!");
+                localStorage.removeItem('cart');
+                window.location.href = "index.html";
+            } catch (e) { alert("خطأ!"); }
+        };
+
+        renderCart();
+    </script>
 </body>
 </html>
