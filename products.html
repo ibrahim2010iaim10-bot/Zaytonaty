@@ -1,28 +1,38 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <title>المنتجات - Zaytonaty</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px 10%; }
+        .card { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card img { width: 100%; height: 180px; object-fit: contain; }
+    </style>
 </head>
 <body>
     <header>
-        <div class="logo">Zaytonaty 🌿</div>
-        <nav><a href="index.html">الرئيسية</a> | <a href="cart.html">السلة</a></nav>
+        <a href="index.html" class="logo">Zaytonaty 🌿</a>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="products.html">المنتجات</a>
+            <a href="cart.html">السلة <span id="cart-count">0</span></a>
+            <a href="admin.html">الإدارة</a>
+        </nav>
     </header>
 
-    <div class="products-grid">
+    <div class="grid">
         <div class="card">
             <img src="https://via.placeholder.com/200?text=Zait+1L" alt="زيت">
             <h3>زيت زيتون (1 لتر)</h3>
             <p>250 ج.م</p>
-            <button class="btn" onclick="addToCart('زيت 1 لتر', 250)">إضافة للسلة</button>
+            <button class="cta-btn" onclick="addToCart('زيت 1 لتر', 250)">إضافة للسلة</button>
         </div>
         <div class="card">
             <img src="https://via.placeholder.com/200?text=Zait+500ml" alt="زيت">
             <h3>زيت زيتون (500 مل)</h3>
             <p>140 ج.م</p>
-            <button class="btn" onclick="addToCart('زيت 500 مل', 140)">إضافة للسلة</button>
+            <button class="cta-btn" onclick="addToCart('زيت 500 مل', 140)">إضافة للسلة</button>
         </div>
     </div>
 
@@ -31,8 +41,14 @@
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push({ name, price });
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert("تمت الإضافة!");
+            updateCount();
+            alert("تمت الإضافة للسلة");
         }
+        function updateCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+        updateCount();
     </script>
 </body>
 </html>
