@@ -1,37 +1,38 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang-key="page_title_products"></title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>المنتجات - Zaytonaty</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <nav>
-            <a href="index.html" data-lang-key="nav_home"></a>
-            <a href="products.html" data-lang-key="nav_products"></a>
-            <a href="cart.html" data-lang-key="nav_cart"></a>
-            <a href="admin.html" data-lang-key="nav_admin"></a>
-        </nav>
-        <button id="lang-toggle"></button>
+        <div class="logo">Zaytonaty 🌿</div>
+        <nav><a href="index.html">الرئيسية</a> | <a href="cart.html">السلة</a></nav>
     </header>
 
-    <main>
-        <section class="page-header section-padding">
-            <h1 data-lang-key="products_header"></h1>
-        </section>
-        
-        <section class="product-list section-padding">
-            <div id="all-products-grid" class="product-grid">
-                <p data-lang-key="loading_products">جار تحميل المنتجات...</p>
-            </div>
-        </section>
-    </main>
-    
-    <footer><p data-lang-key="footer_text"></p></footer>
+    <div class="products-grid">
+        <div class="card">
+            <img src="https://via.placeholder.com/200?text=Zait+1L" alt="زيت">
+            <h3>زيت زيتون (1 لتر)</h3>
+            <p>250 ج.م</p>
+            <button class="btn" onclick="addToCart('زيت 1 لتر', 250)">إضافة للسلة</button>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/200?text=Zait+500ml" alt="زيت">
+            <h3>زيت زيتون (500 مل)</h3>
+            <p>140 ج.م</p>
+            <button class="btn" onclick="addToCart('زيت 500 مل', 140)">إضافة للسلة</button>
+        </div>
+    </div>
 
-    <script src="js/lang.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+        function addToCart(name, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push({ name, price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert("تمت الإضافة!");
+        }
+    </script>
 </body>
 </html>
