@@ -1,54 +1,57 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="main-html">
 <head>
     <meta charset="UTF-8">
-    <title>المنتجات - Zaytonaty</title>
+    <title>Zaytonaty - Products</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px 10%; }
-        .card { background: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .card img { width: 100%; height: 180px; object-fit: contain; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 40px 8%; }
+        .card { background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 15px; }
+        .price { color: #2E7D32; font-weight: bold; font-size: 1.2rem; margin: 10px 0; }
     </style>
 </head>
 <body>
     <header>
         <a href="index.html" class="logo">Zaytonaty 🌿</a>
         <nav>
-            <a href="index.html">الرئيسية</a>
-            <a href="products.html">المنتجات</a>
-            <a href="cart.html">السلة <span id="cart-count">0</span></a>
-            <a href="admin.html">الإدارة</a>
+            <a href="index.html" data-tr="nav-home">الرئيسية</a>
+            <a href="cart.html" data-tr="nav-cart">السلة <span id="cart-count">0</span></a>
+            <button onclick="toggleLanguage()" class="lang-btn" id="lang-text">English</button>
         </nav>
     </header>
 
-    <div class="grid">
+    <div class="products-grid">
         <div class="card">
-            <img src="https://via.placeholder.com/200?text=Zait+1L" alt="زيت">
-            <h3>زيت زيتون (1 لتر)</h3>
-            <p>250 ج.م</p>
-            <button class="cta-btn" onclick="addToCart('زيت 1 لتر', 250)">إضافة للسلة</button>
+            <img src="https://via.placeholder.com/200?text=Zait+1L" alt="Product">
+            <h3 data-tr="p1-name">زيت زيتون بكر ممتاز (1 لتر)</h3>
+            <p class="price">250 <span data-tr="currency">ج.م</span></p>
+            <button class="cta-btn" onclick="addToCart('زيت 1 لتر', 250)" data-tr="add-btn">إضافة للسلة</button>
         </div>
         <div class="card">
-            <img src="https://via.placeholder.com/200?text=Zait+500ml" alt="زيت">
-            <h3>زيت زيتون (500 مل)</h3>
-            <p>140 ج.م</p>
-            <button class="cta-btn" onclick="addToCart('زيت 500 مل', 140)">إضافة للسلة</button>
+            <img src="https://via.placeholder.com/200?text=Zait+500ml" alt="Product">
+            <h3 data-tr="p2-name">زيت زيتون بكر (500 مل)</h3>
+            <p class="price">140 <span data-tr="currency">ج.م</span></p>
+            <button class="cta-btn" onclick="addToCart('زيت 500 مل', 140)" data-tr="add-btn">إضافة للسلة</button>
         </div>
     </div>
 
     <script>
-        function addToCart(name, price) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.push({ name, price });
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCount();
-            alert("تمت الإضافة للسلة");
-        }
-        function updateCount() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-        updateCount();
-    </script>
-</body>
-</html>
+        const translations = {
+            ar: { "nav-home": "الرئيسية", "nav-cart": "السلة ", "p1-name": "زيت زيتون بكر ممتاز (1 لتر)", "p2-name": "زيت زيتون بكر (500 مل)", "currency": "ج.م", "add-btn": "إضافة للسلة" },
+            en: { "nav-home": "Home", "nav-cart": "Cart ", "p1-name": "Extra Virgin Oil (1L)", "p2-name": "Virgin Olive Oil (500ml)", "currency": " EGP", "add-btn": "Add to Cart" }
+        };
+
+        function toggleLanguage() {
+            const html = document.getElementById('main-html');
+            const newLang = html.getAttribute('lang') === 'ar' ? 'en' : 'ar';
+            html.setAttribute('lang', newLang);
+            html.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('lang-text').innerText = newLang === 'ar' ? 'English' : 'العربية';
+            document.querySelectorAll('[data-tr]').forEach(el => {
+                const key = el.getAttribute('data-tr');
+                if(key === 'nav-cart') { el.innerHTML = translations[newLang][key] + '<span id="cart-count">0</span>'; updateCount(); }
+                else { el.innerText = translations[newLang][key]; }
+            });
+            localStorage.setItem
