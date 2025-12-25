@@ -1,20 +1,21 @@
-/* استيراد الخط العربي من جوجل */
+/* 1. التأسيس والخطوط */
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
 * { 
     box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
 }
 
 body {
     font-family: 'Tajawal', sans-serif;
-    margin: 0; 
-    padding: 0; 
     background-color: #f9f9f9;
     color: #333;
     transition: all 0.3s ease;
+    line-height: 1.6;
 }
 
-/* --- الهيدر (شريط التنقل) --- */
+/* 2. الهيدر ورقم التواصل */
 header {
     background: white; 
     padding: 15px 5%;
@@ -34,11 +35,9 @@ header {
     text-decoration: none; 
 }
 
-/* --- تنسيق رقم التواصل المضاف حديثاً --- */
 .contact-info {
     display: flex;
     align-items: center;
-    gap: 8px;
     background: #f0f9f0;
     padding: 8px 18px;
     border-radius: 50px;
@@ -60,7 +59,6 @@ nav a {
     color: #333; 
     margin: 0 15px; 
     font-weight: bold; 
-    transition: 0.3s;
 }
 
 nav a:hover { color: #4CAF50; }
@@ -73,10 +71,10 @@ nav a:hover { color: #4CAF50; }
     font-size: 12px; 
 }
 
-/* --- الصفحة الرئيسية (Hero Section) --- */
+/* 3. واجهة الصفحة (Hero) */
 .hero {
     position: relative; 
-    height: 90vh;
+    height: 85vh;
     background: url('https://images.unsplash.com/photo-1474979266404-7cadd259d366?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
     display: flex; 
     align-items: center; 
@@ -87,89 +85,88 @@ nav a:hover { color: #4CAF50; }
 
 .overlay { 
     position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
+    top: 0; left: 0; width: 100%; height: 100%; 
     background: rgba(0,0,0,0.55); 
 }
 
-.hero-content { 
-    z-index: 1; 
+.hero-content { z-index: 1; padding: 20px; max-width: 800px; }
+
+.hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
+
+/* 4. قسم الكروت والمميزات (الذي طلبته) */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 60px 8%;
+    flex-wrap: wrap;
+    background-color: #fff;
+}
+
+.feature-box {
+    background: #f9fdf9;
+    padding: 30px;
+    width: 320px;
+    text-align: center;
+    border-radius: 15px;
+    border-bottom: 4px solid #4CAF50;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.feature-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.feature-box h3 {
+    color: #2E7D32;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.feature-box p {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* 5. المنتجات (Grid) */
+.products-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 25px; 
+    padding: 40px 8%; 
+}
+
+.card { 
+    background: white; 
     padding: 20px; 
-    max-width: 800px; 
+    border-radius: 15px; 
+    text-align: center; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
 }
 
-.hero h1 { 
-    font-size: 3.5rem; 
-    margin-bottom: 20px; 
-}
+.card img { width: 100%; height: 200px; object-fit: contain; }
 
-/* --- الأزرار العامة --- */
+/* 6. الأزرار */
 .cta-btn {
     background: #4CAF50; 
     color: white; 
-    padding: 15px 40px;
+    padding: 14px 35px;
     border-radius: 50px; 
     text-decoration: none; 
-    font-size: 1.2rem;
     font-weight: bold;
-    display: inline-block; 
     border: none; 
     cursor: pointer; 
     transition: 0.3s;
-    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    display: inline-block;
 }
 
-.cta-btn:hover { 
-    transform: translateY(-3px); 
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-}
+.cta-btn:hover { background: #45a049; transform: scale(1.05); }
 
-/* --- الجداول ومحتوى السلة --- */
-.container { 
-    padding: 40px 8%; 
-    max-width: 1200px; 
-    margin: auto; 
-}
-
-.table-wrapper { 
-    overflow-x: auto; 
-    background: white; 
-    border-radius: 15px; 
-    margin-top: 20px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    min-width: 600px; 
-}
-
-th, td { 
-    padding: 18px; 
-    border-bottom: 1px solid #eee; 
-    text-align: inherit; 
-}
-
-th { 
-    background: #4CAF50; 
-    color: white; 
-}
-
-.del-btn { 
-    background: #ff4d4d; 
-    color: white; 
-    border: none; 
-    padding: 8px 15px; 
-    border-radius: 8px; 
-    cursor: pointer; 
-}
-
-/* --- نموذج بيانات الشحن الاحترافي --- */
+/* 7. نموذج بيانات الشحن (احترافي) */
 .shipping-form {
-    background: #ffffff;
+    background: white;
     padding: 40px;
     margin: 40px auto;
     border-radius: 20px;
@@ -179,46 +176,47 @@ th {
 
 .shipping-form input {
     width: 100%;
-    padding: 15px 20px;
+    padding: 15px;
     margin-bottom: 20px;
     border: 2px solid #e0e0e0;
     border-radius: 12px;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1rem;
+    font-family: inherit;
     transition: 0.3s;
-    background-color: #fafafa;
 }
 
 .shipping-form input:focus {
     border-color: #4CAF50;
-    background-color: #fff;
     outline: none;
+    box-shadow: 0 0 8px rgba(76,175,80,0.2);
 }
 
-/* --- زر اللغة --- */
+/* 8. الجداول (السلة) */
+.container { padding: 40px 8%; max-width: 1200px; margin: auto; }
+
+.table-wrapper { 
+    overflow-x: auto; background: white; border-radius: 15px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+}
+
+table { width: 100%; border-collapse: collapse; min-width: 600px; }
+
+th, td { padding: 18px; border-bottom: 1px solid #eee; text-align: inherit; }
+
+th { background: #4CAF50; color: white; }
+
+.del-btn { background: #ff4d4d; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+
+/* 9. اللغات والتجاوب */
 .lang-btn {
-    background: transparent; 
-    border: 2px solid #4CAF50; 
-    color: #4CAF50;
-    padding: 6px 18px; 
-    border-radius: 20px; 
-    cursor: pointer; 
-    font-weight: bold;
-    font-family: 'Tajawal', sans-serif;
+    background: transparent; border: 2px solid #4CAF50; color: #4CAF50;
+    padding: 6px 16px; border-radius: 20px; cursor: pointer; font-weight: bold;
 }
 
-.lang-btn:hover {
-    background: #4CAF50;
-    color: white;
-}
-
-/* --- التحكم في الاتجاه --- */
 [dir="rtl"] body { text-align: right; }
 [dir="ltr"] body { text-align: left; }
 
-/* للهواتف الذكية */
 @media (max-width: 768px) {
-    header { flex-direction: column; gap: 10px; padding: 20px; }
+    header { flex-direction: column; gap: 15px; text-align: center; }
     .hero h1 { font-size: 2.2rem; }
-    .contact-info { font-size: 13px; }
+    .feature-box { width: 100%; }
 }
