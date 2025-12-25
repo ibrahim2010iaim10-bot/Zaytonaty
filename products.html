@@ -2,7 +2,6 @@
 <html lang="ar" dir="rtl" id="main-html">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zaytonaty - Products</title>
     <link rel="stylesheet" href="style.css">
     <style>
@@ -14,9 +13,9 @@
     </style>
 </head>
 <body>
-
     <header>
         <a href="index.html" class="logo">Zaytonaty 🌿</a>
+        <a href="tel:+201234567890" class="contact-info"><span>📞 01234567890</span></a>
         <nav>
             <a href="index.html" data-tr="nav-home">الرئيسية</a>
             <a href="cart.html" data-tr="nav-cart">السلة <span id="cart-count">0</span></a>
@@ -26,14 +25,13 @@
 
     <div class="products-grid">
         <div class="card">
-            <img src="https://via.placeholder.com/200?text=Zait+1L" alt="Product">
+            <img src="https://via.placeholder.com/200?text=Oil+1L" alt="Product">
             <h3 data-tr="p1-name">زيت زيتون بكر ممتاز (1 لتر)</h3>
             <p class="price">250 <span data-tr="currency">ج.م</span></p>
             <button class="cta-btn" onclick="addToCart('زيت 1 لتر', 250)" data-tr="add-btn">إضافة للسلة</button>
         </div>
-
         <div class="card">
-            <img src="https://via.placeholder.com/200?text=Zait+500ml" alt="Product">
+            <img src="https://via.placeholder.com/200?text=Oil+500ml" alt="Product">
             <h3 data-tr="p2-name">زيت زيتون بكر (500 مل)</h3>
             <p class="price">140 <span data-tr="currency">ج.م</span></p>
             <button class="cta-btn" onclick="addToCart('زيت 500 مل', 140)" data-tr="add-btn">إضافة للسلة</button>
@@ -41,71 +39,40 @@
     </div>
 
     <script>
-        // قاموس اللغات
         const translations = {
-            ar: { 
-                "nav-home": "الرئيسية", 
-                "nav-cart": "السلة ", 
-                "p1-name": "زيت زيتون بكر ممتاز (1 لتر)", 
-                "p2-name": "زيت زيتون بكر (500 مل)", 
-                "currency": "ج.م", 
-                "add-btn": "إضافة للسلة" 
-            },
-            en: { 
-                "nav-home": "Home", 
-                "nav-cart": "Cart ", 
-                "p1-name": "Extra Virgin Oil (1L)", 
-                "p2-name": "Virgin Olive Oil (500ml)", 
-                "currency": " EGP", 
-                "add-btn": "Add to Cart" 
-            }
+            ar: { "nav-home": "الرئيسية", "nav-cart": "السلة ", "p1-name": "زيت زيتون بكر ممتاز (1 لتر)", "p2-name": "زيت زيتون بكر (500 مل)", "currency": "ج.م", "add-btn": "إضافة للسلة" },
+            en: { "nav-home": "Home", "nav-cart": "Cart ", "p1-name": "Extra Virgin Oil (1L)", "p2-name": "Virgin Olive Oil (500ml)", "currency": " EGP", "add-btn": "Add to Cart" }
         };
 
-        // وظيفة تبديل اللغة
         function toggleLanguage() {
             const html = document.getElementById('main-html');
             const newLang = html.getAttribute('lang') === 'ar' ? 'en' : 'ar';
             html.setAttribute('lang', newLang);
             html.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
             document.getElementById('lang-text').innerText = newLang === 'ar' ? 'English' : 'العربية';
-            
             document.querySelectorAll('[data-tr]').forEach(el => {
                 const key = el.getAttribute('data-tr');
-                if(key === 'nav-cart') {
-                    el.innerHTML = translations[newLang][key] + '<span id="cart-count">0</span>';
-                    updateCount();
-                } else {
-                    el.innerText = translations[newLang][key];
-                }
+                if(key === 'nav-cart') { el.innerHTML = translations[newLang][key] + '<span id="cart-count">0</span>'; updateCount(); }
+                else { el.innerText = translations[newLang][key]; }
             });
             localStorage.setItem('pref-lang', newLang);
         }
 
-        // وظيفة الإضافة للسلة (المصلحة)
         function addToCart(name, price) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.push({ name: name, price: price });
+            cart.push({ name, price });
             localStorage.setItem('cart', JSON.stringify(cart));
-            
-            updateCount(); // لتحديث الرقم فوق فوراً
-            
-            const lang = document.getElementById('main-html').getAttribute('lang');
-            alert(lang === 'ar' ? "تمت الإضافة للسلة ✅" : "Added to cart ✅");
+            updateCount();
+            alert(document.getElementById('main-html').getAttribute('lang') === 'ar' ? "تمت الإضافة!" : "Added!");
         }
 
-        // وظيفة تحديث العداد
         function updateCount() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const counter = document.getElementById('cart-count');
-            if (counter) {
-                counter.innerText = cart.length;
-            }
+            document.getElementById('cart-count').innerText = cart.length;
         }
 
-        // عند تشغيل الصفحة
         window.onload = () => {
-            const savedLang = localStorage.getItem('pref-lang');
-            if(savedLang === 'en') toggleLanguage();
+            if(localStorage.getItem('pref-lang') === 'en') toggleLanguage();
             updateCount();
         };
     </script>
