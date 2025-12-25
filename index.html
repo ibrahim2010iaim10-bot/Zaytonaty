@@ -2,10 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Zaytonaty - الرئيسية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaytonaty - زيتوناتي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header>
         <a href="index.html" class="logo">Zaytonaty 🌿</a>
         <nav>
@@ -19,18 +22,37 @@
     <section class="hero">
         <div class="overlay"></div>
         <div class="hero-content">
-            <h1>أهلاً بك في زيتوناتي</h1>
-            <p>أجود أنواع زيت الزيتون البكر من مزارعنا إليك.</p>
-            <a href="products.html" class="cta-btn">تسوق الآن</a>
+            <h1>طعم الطبيعة، في كل قطرة</h1>
+            <p>أجود أنواع زيت الزيتون البكر الممتاز، معصور على البارد ليحتفظ بكل فوائده الصحية وطعمه الأصيل. من مزارعنا إليك مباشرة.</p>
+            <div class="hero-btns">
+                <a href="products.html" class="cta-btn">تسوق الآن 🛒</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-box">
+            <h3>طبيعي 100%</h3>
+            <p>خالٍ من أي إضافات كيميائية أو مواد حافظة.</p>
+        </div>
+        <div class="feature-box">
+            <h3>عصر بارد</h3>
+            <p>للحفاظ على كامل الفيتامينات والقيمة الغذائية.</p>
+        </div>
+        <div class="feature-box">
+            <h3>جودة فائقة</h3>
+            <p>يتم اختيار حبات الزيتون بعناية فائقة يدوياً.</p>
         </div>
     </section>
 
     <script>
-        function updateCount() {
+        // تحديث عداد السلة فور تحميل الصفحة
+        function updateCartCounter() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            document.getElementById('cart-count').innerText = cart.length;
+            const counter = document.getElementById('cart-count');
+            if(counter) counter.innerText = cart.length;
         }
-        updateCount();
+        window.onload = updateCartCounter;
     </script>
 </body>
 </html>
