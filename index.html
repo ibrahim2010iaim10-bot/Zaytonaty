@@ -9,7 +9,7 @@
 <body>
     <header>
         <a href="index.html" class="logo">Zaytonaty 🌿</a>
-        <a href="tel:+201234567890" class="contact-info"><span>📞 01234567890</span></a>
+        <a href="tel:+201234567890" class="contact-info"><span>📞 01018563500</span></a>
         <nav>
             <a href="index.html" data-tr="nav-home">الرئيسية</a>
             <a href="products.html" data-tr="nav-products">المنتجات</a>
@@ -28,15 +28,20 @@
     </section>
 
     <section class="features">
-        <div class="feature-box">
+        <div class="feature-card">
+            <div class="icon">🌿</div>
             <h3 data-tr="feat1-h">طبيعي 100%</h3>
             <p data-tr="feat1-p">خالٍ من أي إضافات كيميائية أو مواد حافظة تماماً.</p>
         </div>
-        <div class="feature-box">
+
+        <div class="feature-card">
+            <div class="icon">❄️</div>
             <h3 data-tr="feat2-h">عصر بارد</h3>
             <p data-tr="feat2-p">يتم العصر على البارد للحفاظ على كامل الفوائد الصحية.</p>
         </div>
-        <div class="feature-box">
+
+        <div class="feature-card">
+            <div class="icon">🏆</div>
             <h3 data-tr="feat3-h">جودة فائقة</h3>
             <p data-tr="feat3-p">يتم اختيار حبات الزيتون بعناية فائقة لضمان أفضل طعم.</p>
         </div>
@@ -45,26 +50,18 @@
     <script>
         const translations = {
             ar: { 
-                "nav-home": "الرئيسية", 
-                "nav-products": "المنتجات", 
-                "nav-cart": "السلة ", 
-                "hero-h1": "طعم الطبيعة، في كل قطرة", 
-                "hero-p": "أجود أنواع زيت الزيتون البكر الممتاز من مزارعنا إليك مباشرة.", 
-                "hero-btn": "تسوق الآن 🛒",
+                "nav-home": "الرئيسية", "nav-products": "المنتجات", "nav-cart": "السلة ", 
+                "hero-h1": "طعم الطبيعة، في كل قطرة", "hero-p": "أجود أنواع زيت الزيتون البكر الممتاز من مزارعنا إليك مباشرة.", "hero-btn": "تسوق الآن 🛒",
                 "feat1-h": "طبيعي 100%", "feat1-p": "خالٍ من أي إضافات كيميائية أو مواد حافظة تماماً.",
                 "feat2-h": "عصر بارد", "feat2-p": "يتم العصر على البارد للحفاظ على كامل الفوائد الصحية.",
                 "feat3-h": "جودة فائقة", "feat3-p": "يتم اختيار حبات الزيتون بعناية فائقة لضمان أفضل طعم."
             },
             en: { 
-                "nav-home": "Home", 
-                "nav-products": "Products", 
-                "nav-cart": "Cart ", 
-                "hero-h1": "Nature's Taste, In Every Drop", 
-                "hero-p": "Premium extra virgin olive oil straight from our farm to you.", 
-                "hero-btn": "Shop Now 🛒",
-                "feat1-h": "100% Natural", "feat1-p": "Completely free from any chemical additives or preservatives.",
-                "feat2-h": "Cold Pressed", "feat2-p": "Cold pressed to preserve all the nutritional and health benefits.",
-                "feat3-h": "High Quality", "feat3-p": "Olives are hand-picked with great care to ensure the best taste."
+                "nav-home": "Home", "nav-products": "Products", "nav-cart": "Cart ", 
+                "hero-h1": "Nature's Taste, In Every Drop", "hero-p": "Premium extra virgin olive oil straight from our farm to you.", "hero-btn": "Shop Now 🛒",
+                "feat1-h": "100% Natural", "feat1-p": "Completely free from any chemicals or preservatives.",
+                "feat2-h": "Cold Pressed", "feat2-p": "Preserving all the nutritional and health benefits.",
+                "feat3-h": "High Quality", "feat3-p": "Carefully selected olives for the best premium taste."
             }
         };
 
