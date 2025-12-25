@@ -2,14 +2,13 @@
 <html lang="ar" dir="rtl" id="main-html">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart - Zaytonaty</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <a href="index.html" class="logo">Zaytonaty 🛒</a>
+        <a href="tel:+201234567890" class="contact-info"><span>📞 01234567890</span></a>
         <nav>
             <a href="products.html" data-tr="nav-back">العودة للتسوق</a>
             <button onclick="toggleLanguage()" class="lang-btn" id="lang-text">English</button>
@@ -17,8 +16,7 @@
     </header>
 
     <div class="container">
-        <h2 data-tr="cart-title" style="text-align: center; margin-bottom: 30px;">محتويات السلة</h2>
-        
+        <h2 data-tr="cart-title">محتويات السلة</h2>
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -27,23 +25,14 @@
                 <tbody id="cart-body"></tbody>
             </table>
         </div>
-
-        <div style="text-align: center; margin: 30px 0;">
-            <h3 style="font-size: 1.8rem;">
-                <span data-tr="total-text">الإجمالي المستحق:</span> 
-                <span id="total-price" style="color: #4CAF50;">0</span> 
-                <span data-tr="currency">ج.م</span>
-            </h3>
-        </div>
+        <h3 style="text-align:center; margin:20px 0;"><span data-tr="total-text">الإجمالي:</span> <span id="total-price">0</span> ج.م</h3>
 
         <div class="shipping-form">
-            <h3 data-tr="ship-h3">📍 تفاصيل الشحن والتوصيل</h3>
-            
-            <input type="text" id="name" placeholder="الاسم بالكامل" data-p="p-name">
-            <input type="tel" id="phone" placeholder="رقم الموبايل (واتساب)" data-p="p-phone">
-            <input type="text" id="address" placeholder="العنوان بالتفصيل (المحافظة، الحي، الشارع)" data-p="p-address">
-            
-            <button class="cta-btn" onclick="sendOrder()" data-tr="btn-send">تأكيد الطلب وشحن المنتجات 🚀</button>
+            <h3 data-tr="ship-h3">بيانات الشحن</h3>
+            <input type="text" id="name" placeholder="الاسم" data-p="p-name">
+            <input type="tel" id="phone" placeholder="الموبايل" data-p="p-phone">
+            <input type="text" id="address" placeholder="العنوان" data-p="p-address">
+            <button class="cta-btn" style="width: 100%" onclick="sendOrder()" data-tr="btn-send">تأكيد الطلب</button>
         </div>
     </div>
 
@@ -61,8 +50,8 @@
         const db = getFirestore(app);
 
         const tr = {
-            ar: { "nav-back": "العودة للتسوق", "cart-title": "سلة المشتريات", "th-p": "المنتج", "th-pr": "السعر", "th-a": "إجراء", "total-text": "الإجمالي المستحق:", "currency": "ج.م", "ship-h3": "📍 تفاصيل الشحن والتوصيل", "btn-send": "تأكيد الطلب وشحن المنتجات 🚀", "p-name": "الاسم بالكامل", "p-phone": "رقم الموبايل (واتساب)", "p-address": "العنوان بالتفصيل (المحافظة، الحي، الشارع)" },
-            en: { "nav-back": "Back to Shop", "cart-title": "Shopping Cart", "th-p": "Product", "th-pr": "Price", "th-a": "Action", "total-text": "Total Amount:", "currency": " EGP", "ship-h3": "📍 Shipping & Delivery Details", "btn-send": "Confirm Order & Ship 🚀", "p-name": "Full Name", "p-phone": "Phone Number (WhatsApp)", "p-address": "Detailed Address (City, Street)" }
+            ar: { "nav-back": "العودة للتسوق", "cart-title": "محتويات السلة", "th-p": "المنتج", "th-pr": "السعر", "th-a": "إجراء", "total-text": "الإجمالي المستحق:", "ship-h3": "📍 بيانات الشحن", "btn-send": "تأكيد الطلب", "p-name": "الاسم", "p-phone": "الموبايل", "p-address": "العنوان" },
+            en: { "nav-back": "Back to Shop", "cart-title": "Your Cart", "th-p": "Product", "th-pr": "Price", "th-a": "Action", "total-text": "Total:", "ship-h3": "📍 Shipping Details", "btn-send": "Confirm Order", "p-name": "Name", "p-phone": "Phone", "p-address": "Address" }
         };
 
         window.toggleLanguage = () => {
@@ -96,15 +85,12 @@
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const n = document.getElementById('name').value;
             const p = document.getElementById('phone').value;
-            if(!n || !p || cart.length === 0) return alert("Please fill data / يرجى ملء البيانات");
-            try {
-                await addDoc(collection(db, "orders"), {
-                    customer_name: n, phone: p, address: document.getElementById('address').value,
-                    items: cart, total: document.getElementById('total-price').innerText, date: new Date().toLocaleString()
-                });
-                alert("Success / تم استلام طلبك بنجاح سيتم التواصل معك قريباً");
-                localStorage.removeItem('cart'); window.location.href = "index.html";
-            } catch(e) { alert("Error / حدث خطأ أثناء الإرسال"); }
+            if(!n || !p || cart.length === 0) return alert("خطأ في البيانات");
+            await addDoc(collection(db, "orders"), {
+                customer_name: n, phone: p, address: document.getElementById('address').value,
+                items: cart, total: document.getElementById('total-price').innerText, date: new Date().toLocaleString()
+            });
+            alert("تم إرسال طلبك!"); localStorage.removeItem('cart'); window.location.href = "index.html";
         };
 
         window.onload = () => { if(localStorage.getItem('pref-lang') === 'en') toggleLanguage(); else loadCart(); };
