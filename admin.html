@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="main-html">
 <head>
     <meta charset="UTF-8">
-    <title>لوحة التحكم - Zaytonaty</title>
+    <title>Dashboard - Zaytonaty</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <a href="index.html" class="logo">Zaytonaty 🔒</a>
-        <nav>
-            <a href="index.html">الرئيسية</a>
-            <a href="products.html">المنتجات</a>
-            <a href="cart.html">السلة <span id="cart-count">0</span></a>
-            <a href="admin.html">الإدارة</a>
-        </nav>
+        <a href="index.html" class="logo">Zaytonaty 🔒 Admin</a>
+        <nav><button onclick="logout()" class="lang-btn" style="border-color:red; color:red;">تسجيل خروج</button></nav>
     </header>
 
-    <div id="auth-section" style="text-align:center; padding: 100px;">
-        <h2>دخول المسؤول</h2>
-        <input type="email" id="email" placeholder="الإيميل" style="max-width:300px;"><br>
-        <input type="password" id="pass" placeholder="كلمة المرور" style="max-width:300px;"><br>
-        <button class="cta-btn" onclick="login()">دخول</button>
+    <div id="login-ui" class="container" style="text-align:center; padding-top:100px;">
+        <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1); max-width:400px; margin:auto;">
+            <h2>دخول المسؤول</h2>
+            <input type="email" id="email" placeholder="البريد الإلكتروني">
+            <input type="password" id="pass" placeholder="كلمة المرور">
+            <button class="cta-btn" style="width:100%" onclick="login()">دخول</button>
+        </div>
     </div>
 
-    <div id="orders-section" style="display:none; padding: 20px;">
+    <div id="admin-ui" class="container" style="display:none;">
         <h2>الطلبات الواردة</h2>
-        <table>
-            <thead><tr><th>التاريخ</th><th>العميل</th><th>الموبايل</th><th>العنوان</th><th>الطلبات</th><th>الحساب</th></tr></thead>
-            <tbody id="admin-body"></tbody>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th>التاريخ</th><th>العميل</th><th>الموبايل</th><th>العنوان</th><th>المنتجات</th><th>الإجمالي</th></tr>
+                </thead>
+                <tbody id="admin-body"></tbody>
+            </table>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -47,23 +48,28 @@
         const db = getFirestore(app);
 
         window.login = () => {
-            signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('pass').value)
-            .catch(() => alert("خطأ في البيانات"));
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            signInWithEmailAndPassword(auth, email, pass).catch(e => alert("خطأ في البيانات"));
         };
+
+        window.logout = () => signOut(auth);
 
         onAuthStateChanged(auth, user => {
             if(user) {
-                document.getElementById('auth-section').style.display='none';
-                document.getElementById('orders-section').style.display='block';
+                document.getElementById('login-ui').style.display='none';
+                document.getElementById('admin-ui').style.display='block';
                 onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), s => {
                     document.getElementById('admin-body').innerHTML = s.docs.map(d => {
                         const o = d.data();
                         return `<tr><td>${o.date}</td><td>${o.customer_name}</td><td>${o.phone}</td><td>${o.address}</td><td>${o.items.map(i=>i.name).join(', ')}</td><td>${o.total} ج.م</td></tr>`;
                     }).join('');
                 });
+            } else {
+                document.getElementById('login-ui').style.display='block';
+                document.getElementById('admin-ui').style.display='none';
             }
         });
-        document.getElementById('cart-count').innerText = (JSON.parse(localStorage.getItem('cart')) || []).length;
     </script>
 </body>
 </html>
