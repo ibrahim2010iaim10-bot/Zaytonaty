@@ -1,51 +1,63 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang-key="page_title_admin"></title>
-    <link rel="stylesheet" href="css/style.css">
-    
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <title>لوحة التحكم</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1 data-lang-key="admin_header"></h1>
-        <button id="logout-button" data-lang-key="logout_btn" style="display:none;"></button>
-    </header>
+    <div id="auth-ui" style="text-align: center; padding-top: 100px;">
+        <h2>دخول المسؤول</h2>
+        <input type="email" id="email" placeholder="الإيميل" style="max-width:300px;"><br>
+        <input type="password" id="pass" placeholder="الباسورد" style="max-width:300px;"><br>
+        <button class="btn" onclick="login()">دخول</button>
+    </div>
 
-    <main>
-        <section id="login-section" class="section-padding">
-            <h2 data-lang-key="login_title"></h2>
-            <form id="admin-login-form">
-                <input type="email" id="admin-email" placeholder="البريد الإلكتروني" required>
-                <input type="password" id="admin-password" placeholder="كلمة المرور" required>
-                <button type="submit" data-lang-key="login_btn"></button>
-                <p id="login-error" style="color: red; display:none;"></p>
-            </form>
-        </section>
+    <div id="admin-ui" style="display:none; padding: 20px;">
+        <h2>قائمة الطلبات</h2>
+        <table id="orders-table">
+            <thead>
+                <tr><th>التاريخ</th><th>العميل</th><th>الموبايل</th><th>العنوان</th><th>الطلبات</th><th>الحساب</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-        <section id="orders-section" class="section-padding" style="display:none;">
-            <h2 data-lang-key="orders_list_header"></h2>
-            <table id="orders-table">
-                <thead>
-                    <tr>
-                        <th data-lang-key="order_id"></th>
-                        <th data-lang-key="order_date"></th>
-                        <th data-lang-key="order_total"></th>
-                        <th data-lang-key="order_status"></th>
-                        <th data-lang-key="order_details"></th>
-                        <th data-lang-key="order_update"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    </tbody>
-            </table>
-        </section>
-    </main>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-    <script src="js/admin.js"></script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM",
+            authDomain: "zaytonaty-f4240.firebaseapp.com",
+            projectId: "zaytonaty-f4240",
+            appId: "1:268778198002:web:2803824e75be502f73916b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.login = () => {
+            signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('pass').value)
+            .catch(() => alert("بيانات خاطئة"));
+        };
+
+        onAuthStateChanged(auth, user => {
+            if(user) {
+                document.getElementById('auth-ui').style.display='none';
+                document.getElementById('admin-ui').style.display='block';
+                const q = query(collection(db, "orders"), orderBy("date", "desc"));
+                onSnapshot(q, s => {
+                    const html = s.docs.map(d => {
+                        const o = d.data();
+                        return `<tr><td>${o.date}</td><td>${o.customer_name}</td><td>${o.phone}</td><td>${o.address}</td><td>${o.items.map(i=>i.name).join(',')}</td><td>${o.total}</td></tr>`;
+                    }).join('');
+                    document.querySelector('tbody').innerHTML = html;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
