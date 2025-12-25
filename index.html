@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl" id="main-html">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zaytonaty - Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -26,10 +27,45 @@
         </div>
     </section>
 
+    <section class="features">
+        <div class="feature-box">
+            <h3 data-tr="feat1-h">طبيعي 100%</h3>
+            <p data-tr="feat1-p">خالٍ من أي إضافات كيميائية أو مواد حافظة تماماً.</p>
+        </div>
+        <div class="feature-box">
+            <h3 data-tr="feat2-h">عصر بارد</h3>
+            <p data-tr="feat2-p">يتم العصر على البارد للحفاظ على كامل الفوائد الصحية.</p>
+        </div>
+        <div class="feature-box">
+            <h3 data-tr="feat3-h">جودة فائقة</h3>
+            <p data-tr="feat3-p">يتم اختيار حبات الزيتون بعناية فائقة لضمان أفضل طعم.</p>
+        </div>
+    </section>
+
     <script>
         const translations = {
-            ar: { "nav-home": "الرئيسية", "nav-products": "المنتجات", "nav-cart": "السلة ", "hero-h1": "طعم الطبيعة، في كل قطرة", "hero-p": "أجود أنواع زيت الزيتون البكر الممتاز من مزارعنا إليك مباشرة.", "hero-btn": "تسوق الآن 🛒" },
-            en: { "nav-home": "Home", "nav-products": "Products", "nav-cart": "Cart ", "hero-h1": "Nature's Taste, In Every Drop", "hero-p": "Premium extra virgin olive oil straight from our farm to you.", "hero-btn": "Shop Now 🛒" }
+            ar: { 
+                "nav-home": "الرئيسية", 
+                "nav-products": "المنتجات", 
+                "nav-cart": "السلة ", 
+                "hero-h1": "طعم الطبيعة، في كل قطرة", 
+                "hero-p": "أجود أنواع زيت الزيتون البكر الممتاز من مزارعنا إليك مباشرة.", 
+                "hero-btn": "تسوق الآن 🛒",
+                "feat1-h": "طبيعي 100%", "feat1-p": "خالٍ من أي إضافات كيميائية أو مواد حافظة تماماً.",
+                "feat2-h": "عصر بارد", "feat2-p": "يتم العصر على البارد للحفاظ على كامل الفوائد الصحية.",
+                "feat3-h": "جودة فائقة", "feat3-p": "يتم اختيار حبات الزيتون بعناية فائقة لضمان أفضل طعم."
+            },
+            en: { 
+                "nav-home": "Home", 
+                "nav-products": "Products", 
+                "nav-cart": "Cart ", 
+                "hero-h1": "Nature's Taste, In Every Drop", 
+                "hero-p": "Premium extra virgin olive oil straight from our farm to you.", 
+                "hero-btn": "Shop Now 🛒",
+                "feat1-h": "100% Natural", "feat1-p": "Completely free from any chemical additives or preservatives.",
+                "feat2-h": "Cold Pressed", "feat2-p": "Cold pressed to preserve all the nutritional and health benefits.",
+                "feat3-h": "High Quality", "feat3-p": "Olives are hand-picked with great care to ensure the best taste."
+            }
         };
 
         function toggleLanguage() {
@@ -38,17 +74,23 @@
             html.setAttribute('lang', newLang);
             html.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
             document.getElementById('lang-text').innerText = newLang === 'ar' ? 'English' : 'العربية';
+            
             document.querySelectorAll('[data-tr]').forEach(el => {
                 const key = el.getAttribute('data-tr');
-                if(key === 'nav-cart') { el.innerHTML = translations[newLang][key] + '<span id="cart-count">0</span>'; updateCount(); }
-                else { el.innerText = translations[newLang][key]; }
+                if(key === 'nav-cart') { 
+                    el.innerHTML = translations[newLang][key] + '<span id="cart-count">0</span>'; 
+                    updateCount(); 
+                } else { 
+                    el.innerText = translations[newLang][key]; 
+                }
             });
             localStorage.setItem('pref-lang', newLang);
         }
 
         function updateCount() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            document.getElementById('cart-count').innerText = cart.length;
+            const countEl = document.getElementById('cart-count');
+            if(countEl) countEl.innerText = cart.length;
         }
 
         window.onload = () => {
