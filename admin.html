@@ -1,25 +1,33 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>لوحة التحكم</title>
+    <title>لوحة التحكم - Zaytonaty</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="auth-ui" style="text-align: center; padding-top: 100px;">
+    <header>
+        <a href="index.html" class="logo">Zaytonaty 🔒</a>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="products.html">المنتجات</a>
+            <a href="cart.html">السلة <span id="cart-count">0</span></a>
+            <a href="admin.html">الإدارة</a>
+        </nav>
+    </header>
+
+    <div id="auth-section" style="text-align:center; padding: 100px;">
         <h2>دخول المسؤول</h2>
         <input type="email" id="email" placeholder="الإيميل" style="max-width:300px;"><br>
-        <input type="password" id="pass" placeholder="الباسورد" style="max-width:300px;"><br>
-        <button class="btn" onclick="login()">دخول</button>
+        <input type="password" id="pass" placeholder="كلمة المرور" style="max-width:300px;"><br>
+        <button class="cta-btn" onclick="login()">دخول</button>
     </div>
 
-    <div id="admin-ui" style="display:none; padding: 20px;">
-        <h2>قائمة الطلبات</h2>
-        <table id="orders-table">
-            <thead>
-                <tr><th>التاريخ</th><th>العميل</th><th>الموبايل</th><th>العنوان</th><th>الطلبات</th><th>الحساب</th></tr>
-            </thead>
-            <tbody></tbody>
+    <div id="orders-section" style="display:none; padding: 20px;">
+        <h2>الطلبات الواردة</h2>
+        <table>
+            <thead><tr><th>التاريخ</th><th>العميل</th><th>الموبايل</th><th>العنوان</th><th>الطلبات</th><th>الحساب</th></tr></thead>
+            <tbody id="admin-body"></tbody>
         </table>
     </div>
 
@@ -34,30 +42,28 @@
             projectId: "zaytonaty-f4240",
             appId: "1:268778198002:web:2803824e75be502f73916b"
         };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
         window.login = () => {
             signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('pass').value)
-            .catch(() => alert("بيانات خاطئة"));
+            .catch(() => alert("خطأ في البيانات"));
         };
 
         onAuthStateChanged(auth, user => {
             if(user) {
-                document.getElementById('auth-ui').style.display='none';
-                document.getElementById('admin-ui').style.display='block';
-                const q = query(collection(db, "orders"), orderBy("date", "desc"));
-                onSnapshot(q, s => {
-                    const html = s.docs.map(d => {
+                document.getElementById('auth-section').style.display='none';
+                document.getElementById('orders-section').style.display='block';
+                onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), s => {
+                    document.getElementById('admin-body').innerHTML = s.docs.map(d => {
                         const o = d.data();
-                        return `<tr><td>${o.date}</td><td>${o.customer_name}</td><td>${o.phone}</td><td>${o.address}</td><td>${o.items.map(i=>i.name).join(',')}</td><td>${o.total}</td></tr>`;
+                        return `<tr><td>${o.date}</td><td>${o.customer_name}</td><td>${o.phone}</td><td>${o.address}</td><td>${o.items.map(i=>i.name).join(', ')}</td><td>${o.total} ج.م</td></tr>`;
                     }).join('');
-                    document.querySelector('tbody').innerHTML = html;
                 });
             }
         });
+        document.getElementById('cart-count').innerText = (JSON.parse(localStorage.getItem('cart')) || []).length;
     </script>
 </body>
 </html>
