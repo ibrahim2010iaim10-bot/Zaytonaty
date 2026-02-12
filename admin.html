@@ -7,11 +7,24 @@
     <style>
         /* ألوان حالات الطلب */
         .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: white; display: inline-block; }
-        .status-new { background-color: #f39c12; }      /* برتقالي للجديد */
-        .status-process { background-color: #3498db; }  /* أزرق لقيد التنفيذ */
-        .status-done { background-color: #27ae60; }     /* أخضر للمنتهي */
+        .status-new { background-color: #f39c12; }
+        .status-process { background-color: #3498db; }
+        .status-done { background-color: #27ae60; }
         
         select.status-select { padding: 5px; border-radius: 8px; border: 1px solid #ddd; font-family: 'Tajawal', sans-serif; cursor: pointer; }
+        
+        /* زر الحذف */
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .delete-btn:hover { background-color: #c0392b; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -41,8 +54,9 @@
                         <th>العميل</th>
                         <th>التفاصيل</th>
                         <th>الإجمالي</th>
-                        <th>الحالة الحالية</th>
+                        <th>الحالة</th>
                         <th>تغيير الحالة</th>
+                        <th>إجراءات</th>
                     </tr>
                 </thead>
                 <tbody id="admin-body"></tbody>
@@ -53,7 +67,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBJX4iidOGIO_WiS6g-LFw89rrJ6ReInoM",
@@ -66,28 +80,31 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // وظيفة الدخول
         window.login = () => {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('pass').value;
             signInWithEmailAndPassword(auth, email, pass).catch(e => alert("خطأ في البيانات"));
         };
 
-        // وظيفة الخروج
         window.logout = () => signOut(auth);
 
-        // وظيفة تحديث حالة الطلب في Firebase
+        // وظيفة تحديث الحالة
         window.updateStatus = async (orderId, newStatus) => {
             try {
                 const orderRef = doc(db, "orders", orderId);
                 await updateDoc(orderRef, { status: newStatus });
-                // لا نحتاج لعمل Refresh لأن onSnapshot سيقوم بالتحديث تلقائياً
-            } catch (e) {
-                alert("حدث خطأ أثناء تحديث الحالة");
+            } catch (e) { alert("حدث خطأ أثناء تحديث الحالة"); }
+        };
+
+        // وظيفة حذف الطلب (الجديدة)
+        window.deleteOrder = async (orderId) => {
+            if(confirm("هل أنت متأكد من حذف هذا الطلب نهائياً؟")) {
+                try {
+                    await deleteDoc(doc(db, "orders", orderId));
+                } catch (e) { alert("حدث خطأ أثناء حذف الطلب"); }
             }
         };
 
-        // مراقبة حالة تسجيل الدخول وجلب البيانات
         onAuthStateChanged(auth, user => {
             if(user) {
                 document.getElementById('login-ui').style.display='none';
@@ -97,9 +114,8 @@
                     document.getElementById('admin-body').innerHTML = s.docs.map(d => {
                         const o = d.data();
                         const id = d.id;
-                        const status = o.status || "جديد"; // الافتراضي هو جديد
+                        const status = o.status || "جديد";
 
-                        // تحديد لون الحالة
                         let statusClass = "status-new";
                         if(status === "قيد التنفيذ") statusClass = "status-process";
                         if(status === "منتهي") statusClass = "status-done";
@@ -113,10 +129,13 @@
                             <td><span class="status-badge ${statusClass}">${status}</span></td>
                             <td>
                                 <select class="status-select" onchange="updateStatus('${id}', this.value)">
-                                    <option value="جديد" ${status === 'جديد' ? 'selected' : ''}>جديد</option>
-                                    <option value="قيد التنفيذ" ${status === 'قيد التنفيذ' ? 'selected' : ''}>قيد التنفيذ</option>
-                                    <option value="منتهي" ${status === 'منتهي' ? 'selected' : ''}>منتهي</option>
+                                    <option value="جديد" ${status === 'جديد' ? 'selected' : ''}>١ جديد</option>
+                                    <option value="قيد التنفيذ" ${status === 'قيد التنفيذ' ? 'selected' : ''}>٢ قيد التنفيذ</option>
+                                    <option value="منتهي" ${status === 'منتهي' ? 'selected' : ''}>٣ منتهي</option>
                                 </select>
+                            </td>
+                            <td>
+                                <button class="delete-btn" onclick="deleteOrder('${id}')">🗑️ حذف</button>
                             </td>
                         </tr>`;
                     }).join('');
